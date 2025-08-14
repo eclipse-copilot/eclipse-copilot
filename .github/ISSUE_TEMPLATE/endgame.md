@@ -18,7 +18,6 @@ tbd
 ### Release steps
 - [ ] Trigger RC build
 - [ ] Verify issues
-- [ ] Check the BI at GitHub
 - [ ] Upload to blob storage
 - [ ] Purge CDN cache
 - [ ] Update solution version in marketplace portal
