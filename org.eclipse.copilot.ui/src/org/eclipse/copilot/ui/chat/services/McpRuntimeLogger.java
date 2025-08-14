@@ -45,7 +45,7 @@ public class McpRuntimeLogger {
 
   private final String consoleName = "Copilot (MCP)";
   private final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-  private final String uiPluginId = "com.microsoft.copilot.eclipse.ui";
+  private final String uiPluginId = "org.eclipse.copilot.ui";
   private final String iconPath = "icons/github_copilot.png";
 
   private MessageConsole mcpConsole;

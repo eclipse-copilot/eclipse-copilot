@@ -188,7 +188,7 @@ public class CopilotPreferencesPage extends FieldEditorPreferencePage implements
         try {
           // Explicitly save the preferences to disk to ensure they persist across the restart
           // CopilotUi.getPlugin().savePluginPreferences() is deprecated, flush is recommended
-          InstanceScope.INSTANCE.getNode("com.microsoft.copilot.eclipse.ui").flush();
+          InstanceScope.INSTANCE.getNode("org.eclipse.copilot.ui").flush();
         } catch (BackingStoreException e) {
           CopilotCore.LOGGER.error("Failed to save preference 'Enable workspace context'", e);
         }
