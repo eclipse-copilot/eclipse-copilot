@@ -204,7 +204,7 @@ public class BeforeLoginWelcomeViewer extends BaseViewer {
       public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) {
         IHandlerService handlerService = (IHandlerService) PlatformUI.getWorkbench().getService(IHandlerService.class);
         try {
-          handlerService.executeCommand("com.microsoft.copilot.eclipse.commands.signIn", null);
+          handlerService.executeCommand("org.eclipse.copilot.commands.signIn", null);
         } catch (Exception e) {
           e.printStackTrace();
         }

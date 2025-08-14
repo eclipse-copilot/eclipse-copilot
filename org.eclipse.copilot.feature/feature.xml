@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="com.microsoft.copilot.eclipse.feature"
+      id="org.eclipse.copilot.feature"
       label="GitHub Copilot"
       version="0.10.0.qualifier">
 
@@ -31,11 +31,11 @@ For the purpose of improving GitHub Copilot, Microsoft and GitHub may share with
    </license>
 
    <plugin
-         id="com.microsoft.copilot.eclipse.core"
+         id="org.eclipse.copilot.core"
          version="0.0.0"/>
 
    <plugin
-         id="com.microsoft.copilot.eclipse.ui"
+         id="org.eclipse.copilot.ui"
          version="0.0.0"/>
 
 </feature>
