@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension
+		point="org.eclipse.core.contenttype.contentTypes">
+		<content-type
+			id="org.eclipse.copilot.dummy"
+			name="Copilot supported content-type"
+			priority="normal" />
+	</extension>
+	<extension
+		point="org.eclipse.lsp4e.languageServer">
+		<server
+			id="org.eclipse.copilot.ls"
+			label="GitHub Copilot Language Server"
+			class="org.eclipse.copilot.core.lsp.LsStreamConnectionProvider"
+			clientImpl="org.eclipse.copilot.core.lsp.CopilotLanguageClient"
+			serverInterface="org.eclipse.copilot.core.lsp.CopilotLanguageServer"
+			singleton="true"
+			launcherBuilder="org.eclipse.copilot.core.lsp.CopilotLauncherBuilder"
+			lastDocumentDisconnectedTimeout="2147483647"> <!-- TODO: this is defer the ls shutdown, which will lose the chat status -->
+		</server>
+		<contentTypeMapping
+			id="org.eclipse.copilot.ls"
+			languageId="dummy"
+			contentType="org.eclipse.copilot.dummy">
+		</contentTypeMapping>
+	</extension>
+</plugin>

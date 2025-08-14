@@ -1,0 +1,17 @@
+{
+	"name": "eclipse-copilot-agent",
+	"version": "0.0.1",
+	"description": "Sub package for managing @github/copilot-language-server dependency",
+	"publisher": "eclipse-copilot",
+	"private": true,
+	"repository": {
+		"type": "git",
+		"url": ""
+	},
+	"scripts": {
+		"postinstall": "npx --yes copyfiles -u 3 \"node_modules/@github/copilot-language-server/native/**/*\" \".\" && npx --yes copyfiles -u 3 \"node_modules/@github/copilot-language-server/dist/**/*\" \".\""
+	},
+	"dependencies": {
+		"@github/copilot-language-server": "1.353.0"
+	}
+}
