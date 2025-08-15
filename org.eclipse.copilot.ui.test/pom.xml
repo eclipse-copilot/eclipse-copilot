@@ -10,7 +10,6 @@
 	<artifactId>org.eclipse.copilot.ui.test</artifactId>
 	<packaging>eclipse-test-plugin</packaging>
 	<name>${base.name} :: UI Tests</name>
-	
 	<properties>
 		<checkstyle.skip>true</checkstyle.skip>
 	</properties>

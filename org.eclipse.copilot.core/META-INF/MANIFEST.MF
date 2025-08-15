@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.eclipse.copilot.core
+Bundle-Name: Copilot Core
 Bundle-SymbolicName: org.eclipse.copilot.core;singleton:=true
 Bundle-Version: 0.10.0.qualifier
 Export-Package: org.eclipse.copilot.core,
