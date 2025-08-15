@@ -68,7 +68,6 @@ public class LanguageServerSettingManager implements IProxyChangeListener, IProp
     this.copilotLanguageServerConnection = conn;
     this.proxyService = proxyService;
     this.preferenceStore = preferenceStore;
-
     // add listeners
     proxyService.addProxyChangeListener(this);
     preferenceStore.addPropertyChangeListener(this);
