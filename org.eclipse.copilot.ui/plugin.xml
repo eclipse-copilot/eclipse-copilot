@@ -47,14 +47,14 @@
 			locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
 			<dynamic
 				id="org.eclipse.copilot.ui.dynamicContextMenu.projectExplorer"
-				class="org.eclipse.copilot.ui.handlers.ShowContextMenuHandler"/>
+				class="org.eclipse.copilot.ui.handlers.ShowContextMenuHandler" />
 		</menuContribution>
 
 		<menuContribution
 			locationURI="popup:org.eclipse.jdt.ui.PackageExplorer?after=additions">
 			<dynamic
 				id="org.eclipse.copilot.ui.dynamicContextMenu.packageExplorer"
-				class="org.eclipse.copilot.ui.handlers.ShowContextMenuHandler"/>
+				class="org.eclipse.copilot.ui.handlers.ShowContextMenuHandler" />
 		</menuContribution>
 	</extension>
 	<extension
@@ -552,15 +552,6 @@
 			content="/intro/whatsnew/whatsNewExtensionContent.xml">
 		</configExtension>
 	</extension>
-	<extension point="org.eclipse.ui.intro.quicklinks">
-		<command
-			description="%intro.quickStart.description"
-			importance="high"
-			icon="icons/github_copilot_intro.png"
-			id="org.eclipse.copilot.commands.openQuickStart"
-			label="%intro.quickStart.label">
-		</command>
-	</extension>
 	<extension point="org.eclipse.e4.ui.css.swt.theme">
 		<stylesheet uri="css/dark.css">
 			<themeid refid="org.eclipse.e4.ui.css.theme.e4_dark"></themeid>
@@ -577,13 +568,13 @@
 		</stylesheet>
 	</extension>
 	<extension
-      point="org.eclipse.ui.activities">
-   <activity
-         id="org.eclipse.copilot.activity.hideLegacy"
-         name="Hide Legacy Contributions"
-         description="Filters legacy UI contributions after migration"/>
-   <activityPatternBinding
-         activityId="org.eclipse.copilot.activity.hideLegacy"
-         pattern="com.microsoft.copilot.eclipse.*"/>
-   </extension>
+		point="org.eclipse.ui.activities">
+		<activity
+			id="org.eclipse.copilot.activity.hideLegacy"
+			name="Hide Legacy Contributions"
+			description="Filters legacy UI contributions after migration" />
+		<activityPatternBinding
+			activityId="org.eclipse.copilot.activity.hideLegacy"
+			pattern="com.microsoft.copilot.eclipse.*" />
+	</extension>
 </plugin>
