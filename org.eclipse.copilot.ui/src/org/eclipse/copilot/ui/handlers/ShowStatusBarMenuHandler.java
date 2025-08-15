@@ -225,10 +225,10 @@ public class ShowStatusBarMenuHandler extends CopilotHandler implements IElement
     if (CopilotStatusResult.NOT_SIGNED_IN.equals(status)) {
       MenuActionFactory.createMenuAction(menuManager, Messages.menu_signToGitHub,
           UiUtils.buildImageDescriptorFromPngPath("/icons/signin.png"), handlerService,
-          "com.microsoft.copilot.eclipse.commands.signIn", true);
+          "org.eclipse.copilot.commands.signIn", true);
     } else if (CopilotStatusResult.OK.equals(status)) {
       MenuActionFactory.createMenuAction(menuManager, authStatusManager.getUserName(), authStatusManager.getUserName(),
-          null, handlerService, "com.microsoft.copilot.eclipse.commands.disabledDoNothing", false);
+          null, handlerService, "org.eclipse.copilot.commands.disabledDoNothing", false);
     }
   }
 
@@ -278,20 +278,20 @@ public class ShowStatusBarMenuHandler extends CopilotHandler implements IElement
         String premiumRequestsText = calculator.getPremiumText();
         premiumRequestsAction = MenuActionFactory.createMenuAction(menuManager, premiumRequestsText,
             UiUtils.buildImageDescriptorFromPngPath("/icons/blank.png"), handlerService,
-            "com.microsoft.copilot.eclipse.commands.enabledDoNothing", true);
+            "org.eclipse.copilot.commands.enabledDoNothing", true);
       }
 
       // Code completions usage
       String codeCompletionsText = calculator.getCompletionText();
       completionRemainingAction = MenuActionFactory.createMenuAction(menuManager, codeCompletionsText,
           UiUtils.buildImageDescriptorFromPngPath("/icons/blank.png"), handlerService,
-          "com.microsoft.copilot.eclipse.commands.enabledDoNothing", true);
+          "org.eclipse.copilot.commands.enabledDoNothing", true);
 
       // Chat messages usage
       String chatMessagesText = calculator.getChatText();
       chatRemainingAction = MenuActionFactory.createMenuAction(menuManager, chatMessagesText,
           UiUtils.buildImageDescriptorFromPngPath("/icons/blank.png"), handlerService,
-          "com.microsoft.copilot.eclipse.commands.enabledDoNothing", true);
+          "org.eclipse.copilot.commands.enabledDoNothing", true);
 
       // Premium requests usage
       if (quotaStatus.getCopilotPlan() != CopilotPlan.free) {
@@ -300,14 +300,14 @@ public class ShowStatusBarMenuHandler extends CopilotHandler implements IElement
           String premiumRequestsText = calculator.getPremiumText();
           premiumRequestsAction = MenuActionFactory.createMenuAction(menuManager, premiumRequestsText,
               UiUtils.buildImageDescriptorFromPngPath("/icons/blank.png"), handlerService,
-              "com.microsoft.copilot.eclipse.commands.enabledDoNothing", true);
+              "org.eclipse.copilot.commands.enabledDoNothing", true);
         }
 
         MenuActionFactory.createMenuAction(menuManager,
             Messages.menu_quota_additionalPremiumRequests
                 + (quotaStatus.getPremiumInteractionsQuota().isOveragePermitted() ? Messages.menu_quota_enabled
                     : Messages.menu_quota_disabled),
-            handlerService, "com.microsoft.copilot.eclipse.commands.disabledDoNothing", false);
+            handlerService, "org.eclipse.copilot.commands.disabledDoNothing", false);
       }
     } finally {
       gc.dispose();
@@ -318,7 +318,7 @@ public class ShowStatusBarMenuHandler extends CopilotHandler implements IElement
       LocalDate resetDate = LocalDate.parse(quotaStatus.getResetDate());
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
       MenuActionFactory.createMenuAction(menuManager, Messages.menu_quota_allowanceReset + resetDate.format(formatter),
-          handlerService, "com.microsoft.copilot.eclipse.commands.disabledDoNothing", false);
+          handlerService, "org.eclipse.copilot.commands.disabledDoNothing", false);
     }
 
     // Upsell actions based on the user's plan
@@ -326,7 +326,7 @@ public class ShowStatusBarMenuHandler extends CopilotHandler implements IElement
     if (quotaStatus.getCopilotPlan() == CopilotPlan.free) {
       // If the user is on a free plan, show a link to upgrade.
       MenuActionFactory.createMenuAction(menuManager, Messages.menu_quota_updateCopilotToPro, upgradeIcon,
-          handlerService, "com.microsoft.copilot.eclipse.commands.upgradeCopilotPlan", true);
+          handlerService, "org.eclipse.copilot.commands.upgradeCopilotPlan", true);
     } else if (quotaStatus.getCopilotPlan() != CopilotPlan.business
         && quotaStatus.getCopilotPlan() != CopilotPlan.enterprise) {
       // If the user is not on a free plan / business plan / enterprise plan, show a link to manage subscription.
@@ -339,7 +339,7 @@ public class ShowStatusBarMenuHandler extends CopilotHandler implements IElement
   private void addOpenChatViewAction(MenuManager menuManager) {
     ImageDescriptor icon = UiUtils.buildImageDescriptorFromPngPath("/icons/github_copilot.png");
     MenuActionFactory.createMenuAction(menuManager, Messages.menu_openChatView, icon, handlerService,
-        "com.microsoft.copilot.eclipse.commands.openChatView", true);
+        "org.eclipse.copilot.commands.openChatView", true);
   }
 
   private void addLinkToFeedbackForumAction(MenuManager menuManager) {
@@ -353,31 +353,31 @@ public class ShowStatusBarMenuHandler extends CopilotHandler implements IElement
   private void addPreferencesAction(MenuManager menuManager) {
     ImageDescriptor editPreferencesIcon = UiUtils.buildImageDescriptorFromPngPath("/icons/edit_preferences.png");
     MenuActionFactory.createMenuAction(menuManager, Messages.menu_editPreferences, editPreferencesIcon, handlerService,
-        "com.microsoft.copilot.eclipse.commands.openPreferences", true);
+        "org.eclipse.copilot.commands.openPreferences", true);
   }
 
   private void addEditKeyboardShortcutsAction(MenuManager menuManager) {
     ImageDescriptor editKeyboardShortcutsIcon = UiUtils
         .buildImageDescriptorFromPngPath("/icons/edit_keyboard_shortcuts.png");
     MenuActionFactory.createMenuAction(menuManager, Messages.menu_editKeyboardShortcuts, editKeyboardShortcutsIcon,
-        handlerService, "com.microsoft.copilot.eclipse.commands.openEditKeyboardShortcuts", true);
+        handlerService, "org.eclipse.copilot.commands.openEditKeyboardShortcuts", true);
   }
 
   private void addCompletionSettingsAction(MenuManager menuManager) {
     ImageDescriptor placeHolder = UiUtils.buildImageDescriptorFromPngPath("/icons/blank.png");
     if (languageServerSettingManager.isAutoShowCompletionEnabled()) {
       MenuActionFactory.createMenuAction(menuManager, Messages.menu_turnOffCompletions, placeHolder, handlerService,
-          "com.microsoft.copilot.eclipse.commands.autoShowCompletions", true);
+          "org.eclipse.copilot.commands.autoShowCompletions", true);
     } else {
       MenuActionFactory.createMenuAction(menuManager, Messages.menu_turnOnCompletions, placeHolder, handlerService,
-          "com.microsoft.copilot.eclipse.commands.autoShowCompletions", true);
+          "org.eclipse.copilot.commands.autoShowCompletions", true);
     }
   }
 
   private void addShowWhatIsNewAction(MenuManager menuManager) {
     ImageDescriptor placeHolder = UiUtils.buildImageDescriptorFromPngPath("/icons/blank.png");
     MenuActionFactory.createMenuAction(menuManager, Messages.menu_whatIsNew, placeHolder, handlerService,
-        "com.microsoft.copilot.eclipse.commands.showWhatIsNew", true);
+        "org.eclipse.copilot.commands.showWhatIsNew", true);
   }
 
   private void scheduleSpinnerJob(UIElement uiElement) {
@@ -398,12 +398,12 @@ public class ShowStatusBarMenuHandler extends CopilotHandler implements IElement
     menuManager.add(new Separator());
     if (Objects.equals(authStatusManager.getCopilotStatus(), CopilotStatusResult.NOT_AUTHORIZED)) {
       MenuActionFactory.createMenuAction(menuManager, Messages.menu_configureGitHubCopilotSettings, null,
-          handlerService, "com.microsoft.copilot.eclipse.commands.configureCopilotSettings", true);
+          handlerService, "org.eclipse.copilot.commands.configureCopilotSettings", true);
     }
     // Only show sign out action when the user is in OK, NOT_AUTHORIZED, WARNING, or ERROR state.
     ImageDescriptor signOutIcon = UiUtils.buildImageDescriptorFromPngPath("/icons/signout.png");
     MenuActionFactory.createMenuAction(menuManager, Messages.menu_signOutOfGitHub, signOutIcon, handlerService,
-        "com.microsoft.copilot.eclipse.commands.signOut", true);
+        "org.eclipse.copilot.commands.signOut", true);
   }
 
   private static class MenuActionFactory {

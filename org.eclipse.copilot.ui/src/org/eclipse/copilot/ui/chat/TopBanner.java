@@ -112,14 +112,14 @@ public class TopBanner extends Composite {
       public void widgetSelected(SelectionEvent e) {
         Map<String, Object> parameters = new HashMap<>();
 
-        parameters.put("com.microsoft.copilot.eclipse.commands.openPreferences.activePageId",
+        parameters.put("org.eclipse.copilot.commands.openPreferences.activePageId",
             OpenPreferencesHandler.copilotPreferencesPage);
 
-        parameters.put("com.microsoft.copilot.eclipse.commands.openPreferences.pageIds",
+        parameters.put("org.eclipse.copilot.commands.openPreferences.pageIds",
             String.join(",", OpenPreferencesHandler.copilotPreferencesPage,
                 OpenPreferencesHandler.customInstructionsPreferencePage, OpenPreferencesHandler.mcpPreferencePage));
 
-        UiUtils.executeCommandWithParameters("com.microsoft.copilot.eclipse.commands.openPreferences", parameters);
+        UiUtils.executeCommandWithParameters("org.eclipse.copilot.commands.openPreferences", parameters);
       }
     });
 

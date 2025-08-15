@@ -16,7 +16,7 @@
 			<toolbar
 				id="org.eclipse.copilot.ui.statusBar">
 				<command
-					commandId="com.microsoft.copilot.eclipse.commands.showStatusBarMenu"
+					commandId="org.eclipse.copilot.commands.showStatusBarMenu"
 					icon="icons/github_copilot_signed_in.png"
 					style="push">
 				</command>
@@ -36,7 +36,7 @@
 		</menuContribution>
 		<menuContribution locationURI="toolbar:org.eclipse.egit.ui.StagingView">
 			<command
-				commandId="com.microsoft.copilot.eclipse.commands.generateCommitMessage"
+				commandId="org.eclipse.copilot.commands.generateCommitMessage"
 				icon="icons/github_copilot.png"
 				id="org.eclipse.copilot.egit.generateCommitMessage"
 				label="%command.generateCommitMessage.name"
@@ -47,14 +47,14 @@
 			locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
 			<dynamic
 				id="org.eclipse.copilot.ui.dynamicContextMenu.projectExplorer"
-				class="org.eclipse.copilot.ui.handlers.ShowContextMenuHandler"/>
+				class="org.eclipse.copilot.ui.handlers.ShowContextMenuHandler" />
 		</menuContribution>
 
 		<menuContribution
 			locationURI="popup:org.eclipse.jdt.ui.PackageExplorer?after=additions">
 			<dynamic
 				id="org.eclipse.copilot.ui.dynamicContextMenu.packageExplorer"
-				class="org.eclipse.copilot.ui.handlers.ShowContextMenuHandler"/>
+				class="org.eclipse.copilot.ui.handlers.ShowContextMenuHandler" />
 		</menuContribution>
 	</extension>
 	<extension
@@ -102,119 +102,119 @@
 	<extension
 		point="org.eclipse.ui.commands">
 		<category
-			id="com.microsoft.copilot.eclipse.ui.githubCopilot"
+			id="org.eclipse.copilot.ui.githubCopilot"
 			name="%command.copilotForEclipsePlugin.name">
 		</category>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.showStatusBarMenu"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.showStatusBarMenu"
 			name="%command.showStatusBarMenu.name">
 		</command>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.signIn"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.signIn"
 			name="%command.signInToGitHub.name">
 		</command>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.openChatView"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.openChatView"
 			name="%command.showChatView.name">
 		</command>
 		<command
-			id="com.microsoft.copilot.eclipse.commands.signOut"
+			id="org.eclipse.copilot.commands.signOut"
 			name="%command.signOutFromGitHub.name">
 		</command>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.configureCopilotSettings"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.configureCopilotSettings"
 			name="%command.configureCopilotSettings.name">
 		</command>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.triggerInlineSuggestion"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.triggerInlineSuggestion"
 			name="%command.triggerInlineSuggestions.name">
 		</command>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.acceptFullSuggestion"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.acceptFullSuggestion"
 			name="%command.acceptFullSuggestion.name">
 		</command>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.acceptNextWord"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.acceptNextWord"
 			name="%command.acceptNextWord.name">
 		</command>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.discardSuggestion"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.discardSuggestion"
 			name="%command.discardSuggestion.name">
 		</command>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.openPreferences"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.openPreferences"
 			name="%command.openPreferencesPage.name">
 			<commandParameter
-				id="com.microsoft.copilot.eclipse.commands.openPreferences.activePageId"
+				id="org.eclipse.copilot.commands.openPreferences.activePageId"
 				name="%command.openPreferencesPage.parameter.name"
 				values="">
 			</commandParameter>
 			<commandParameter
-				id="com.microsoft.copilot.eclipse.commands.openPreferences.pageIds"
+				id="org.eclipse.copilot.commands.openPreferences.pageIds"
 				name="%command.openPreferencesPage.parameter.name"
 				values="">
 			</commandParameter>
 		</command>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.openEditKeyboardShortcuts"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.openEditKeyboardShortcuts"
 			name="%command.openEditKeyboardShortcuts.name">
 		</command>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.autoShowCompletions"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.autoShowCompletions"
 			name="%command.autoShowCompletions.name">
 		</command>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.showWhatIsNew"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.showWhatIsNew"
 			name="%command.showWhatIsNew.name">
 		</command>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.upgradeCopilotPlan"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.upgradeCopilotPlan"
 			name="%command.upgradeCopilotPlan.name">
 		</command>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.generateCommitMessage"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.generateCommitMessage"
 			name="%command.generateCommitMessage.name">
 		</command>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.enabledDoNothing"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.enabledDoNothing"
 			name="%command.enabledDoNothing.name">
 		</command>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.disabledDoNothing"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.disabledDoNothing"
 			name="%command.disabledDoNothing.name">
 		</command>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.openQuickStart"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.openQuickStart"
 			name="%command.openQuickStart.name">
 		</command>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.addToReferences"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.addToReferences"
 			name="%command.addToReference.name">
 		</command>
 		<command
-			categoryId="com.microsoft.copilot.eclipse.ui.githubCopilot"
-			id="com.microsoft.copilot.eclipse.commands.openUrl"
+			categoryId="org.eclipse.copilot.ui.githubCopilot"
+			id="org.eclipse.copilot.commands.openUrl"
 			name="%command.openUrl.name">
 			<commandParameter
-				id="com.microsoft.copilot.eclipse.commands.openUrl.url"
+				id="org.eclipse.copilot.commands.openUrl.url"
 				name="URL"
 				values="">
 			</commandParameter>
@@ -226,83 +226,83 @@
 		point="org.eclipse.ui.handlers">
 		<handler
 			class="org.eclipse.copilot.ui.handlers.ShowStatusBarMenuHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.showStatusBarMenu">
+			commandId="org.eclipse.copilot.commands.showStatusBarMenu">
 		</handler>
 		<handler
 			class="org.eclipse.copilot.ui.handlers.SignInHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.signIn">
+			commandId="org.eclipse.copilot.commands.signIn">
 		</handler>
 		<handler
 			class="org.eclipse.copilot.ui.handlers.SignOutHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.signOut">
+			commandId="org.eclipse.copilot.commands.signOut">
 		</handler>
 		<handler
 			class="org.eclipse.copilot.ui.handlers.ConfigureCopilotSettingsHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.configureCopilotSettings">
+			commandId="org.eclipse.copilot.commands.configureCopilotSettings">
 		</handler>
 		<handler
 			class="org.eclipse.copilot.ui.handlers.TriggerInlineSuggestionHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.triggerInlineSuggestion">
+			commandId="org.eclipse.copilot.commands.triggerInlineSuggestion">
 		</handler>
 		<handler
 			class="org.eclipse.copilot.ui.handlers.AcceptFullSuggestionHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.acceptFullSuggestion">
+			commandId="org.eclipse.copilot.commands.acceptFullSuggestion">
 		</handler>
 		<handler
 			class="org.eclipse.copilot.ui.handlers.AcceptNextWordHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.acceptNextWord">
+			commandId="org.eclipse.copilot.commands.acceptNextWord">
 		</handler>
 		<handler
 			class="org.eclipse.copilot.ui.handlers.DiscardSuggestionHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.discardSuggestion">
+			commandId="org.eclipse.copilot.commands.discardSuggestion">
 		</handler>
 		<handler
 			class="org.eclipse.copilot.ui.handlers.OpenPreferencesHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.openPreferences">
+			commandId="org.eclipse.copilot.commands.openPreferences">
 		</handler>
 		<handler
 			class="org.eclipse.copilot.ui.handlers.OpenEditKeyboardShortcutsHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.openEditKeyboardShortcuts">
+			commandId="org.eclipse.copilot.commands.openEditKeyboardShortcuts">
 		</handler>
 		<handler
 			class="org.eclipse.copilot.ui.handlers.OpenChatViewHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.openChatView">
+			commandId="org.eclipse.copilot.commands.openChatView">
 		</handler>
 		<handler
 			class="org.eclipse.copilot.ui.handlers.AutoShowCompletionsHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.autoShowCompletions">
+			commandId="org.eclipse.copilot.commands.autoShowCompletions">
 		</handler>
 		<handler
 			class="org.eclipse.copilot.ui.handlers.ShowWhatIsNewHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.showWhatIsNew">
+			commandId="org.eclipse.copilot.commands.showWhatIsNew">
 		</handler>
 		<handler
 			class="org.eclipse.copilot.ui.handlers.CopilotUpgradePlanHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.upgradeCopilotPlan">
+			commandId="org.eclipse.copilot.commands.upgradeCopilotPlan">
 		</handler>
 		<handler
 			class="org.eclipse.copilot.ui.handlers.GenerateCommitMessageHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.generateCommitMessage">
+			commandId="org.eclipse.copilot.commands.generateCommitMessage">
 		</handler>
 		<handler
 			class="org.eclipse.copilot.ui.handlers.EnabledDoNothingHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.enabledDoNothing">
+			commandId="org.eclipse.copilot.commands.enabledDoNothing">
 		</handler>
 		<handler
 			class="org.eclipse.copilot.ui.handlers.DisabledDoNothingHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.disabledDoNothing">
+			commandId="org.eclipse.copilot.commands.disabledDoNothing">
 		</handler>
 		<handler
 			class="org.eclipse.copilot.ui.handlers.OpenQuickStartHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.openQuickStart">
+			commandId="org.eclipse.copilot.commands.openQuickStart">
 		</handler>
 		<handler
-			commandId="com.microsoft.copilot.eclipse.commands.addToReferences"
+			commandId="org.eclipse.copilot.commands.addToReferences"
 			class="org.eclipse.copilot.ui.handlers.AddToReferencesHandler">
 		</handler>
 		<handler
 			class="org.eclipse.copilot.ui.handlers.OpenUrlHandler"
-			commandId="com.microsoft.copilot.eclipse.commands.openUrl">
+			commandId="org.eclipse.copilot.commands.openUrl">
 		</handler>
 	</extension>
 
@@ -320,45 +320,45 @@
 	<extension
 		point="org.eclipse.ui.bindings">
 		<key
-			commandId="com.microsoft.copilot.eclipse.commands.triggerInlineSuggestion"
+			commandId="org.eclipse.copilot.commands.triggerInlineSuggestion"
 			contextId="org.eclipse.ui.textEditorScope"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+M3+/">
 		</key>
 		<key
-			commandId="com.microsoft.copilot.eclipse.commands.acceptFullSuggestion"
+			commandId="org.eclipse.copilot.commands.acceptFullSuggestion"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			contextId="org.eclipse.ui.textEditorScope"
 			sequence="TAB">
 		</key>
 		<key
-			commandId="com.microsoft.copilot.eclipse.commands.acceptNextWord"
+			commandId="org.eclipse.copilot.commands.acceptNextWord"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			contextId="org.eclipse.copilot.completionAvailableContext"
 			sequence="M1+ARROW_RIGHT">
 		</key>
 		<key
-			commandId="com.microsoft.copilot.eclipse.commands.discardSuggestion"
+			commandId="org.eclipse.copilot.commands.discardSuggestion"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			contextId="org.eclipse.ui.textEditorScope"
 			sequence="ESC">
 		</key>
 		<key
-			commandId="com.microsoft.copilot.eclipse.commands.openChatView"
+			commandId="org.eclipse.copilot.commands.openChatView"
 			contextId="org.eclipse.ui.contexts.window"
 			platform="cocoa"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="CTRL+COMMAND+I">
 		</key>
 		<key
-			commandId="com.microsoft.copilot.eclipse.commands.openChatView"
+			commandId="org.eclipse.copilot.commands.openChatView"
 			contextId="org.eclipse.ui.contexts.window"
 			platform="win32"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="CTRL+ALT+I">
 		</key>
 		<key
-			commandId="com.microsoft.copilot.eclipse.commands.openChatView"
+			commandId="org.eclipse.copilot.commands.openChatView"
 			contextId="org.eclipse.ui.contexts.window"
 			platform="gtk"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
@@ -380,7 +380,7 @@
 		<perspective
 			class="org.eclipse.copilot.ui.perspectives.CopilotPerspectiveFactory"
 			icon="icons/github_copilot.png"
-			id="org.eclipse.copilot.ui.perspectives.CopilotPerspective"
+			id="com.microsoft.copilot.eclipse.ui.perspectives.CopilotPerspective"
 			name="Copilot">
 		</perspective>
 	</extension>
@@ -395,7 +395,7 @@
 			</editorOnboardingCommand>
 		</perspectiveExtension>
 		<perspectiveExtension
-			targetID="org.eclipse.copilot.ui.perspectives.CopilotPerspective"
+			targetID="com.microsoft.copilot.eclipse.ui.perspectives.CopilotPerspective"
 			editorOnboardingImage="icons/copilot_perspective.png"
 			editorOnboardingText="Open a file or drop files here to open them">
 			<editorOnboardingCommand
@@ -542,7 +542,7 @@
 			description="%intro.quickStart.description"
 			importance="high"
 			icon="icons/github_copilot_intro.png"
-			id="com.microsoft.copilot.eclipse.commands.openQuickStart"
+			id="org.eclipse.copilot.commands.openQuickStart"
 			label="%intro.quickStart.label">
 		</command>
 	</extension>
@@ -566,5 +566,15 @@
 				refid="org.eclipse.e4.ui.css.theme.e4_classic">
 			</themeid>
 		</stylesheet>
+	</extension>
+	<extension
+		point="org.eclipse.ui.activities">
+		<activity
+			id="org.eclipse.copilot.activity.hideLegacy"
+			name="Hide Legacy Contributions"
+			description="Filters legacy UI contributions after migration" />
+		<activityPatternBinding
+			activityId="org.eclipse.copilot.activity.hideLegacy"
+			pattern="com.microsoft.copilot.eclipse.*" />
 	</extension>
 </plugin>

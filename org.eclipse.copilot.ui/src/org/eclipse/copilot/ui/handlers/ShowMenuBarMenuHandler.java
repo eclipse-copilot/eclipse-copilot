@@ -89,10 +89,10 @@ public class ShowMenuBarMenuHandler extends CompoundContributionItem implements 
 
     // menu: username/Sign In
     if (CopilotStatusResult.NOT_SIGNED_IN.equals(status)) {
-      items.add(createCommandItem("com.microsoft.copilot.eclipse.commands.signIn", Messages.menu_signToGitHub,
+      items.add(createCommandItem("org.eclipse.copilot.commands.signIn", Messages.menu_signToGitHub,
           UiUtils.buildImageDescriptorFromPngPath("/icons/signin.png")));
     } else if (CopilotStatusResult.OK.equals(status)) {
-      items.add(createCommandItem("com.microsoft.copilot.eclipse.commands.disabledDoNothing",
+      items.add(createCommandItem("org.eclipse.copilot.commands.disabledDoNothing",
           authStatusManager.getUserName(), authStatusManager.getUserName(), null));
     }
 
@@ -101,7 +101,7 @@ public class ShowMenuBarMenuHandler extends CompoundContributionItem implements 
 
     // menu: openChatView
     items.add(new Separator());
-    items.add(createCommandItem("com.microsoft.copilot.eclipse.commands.openChatView", Messages.menu_openChatView,
+    items.add(createCommandItem("org.eclipse.copilot.commands.openChatView", Messages.menu_openChatView,
         UiUtils.buildImageDescriptorFromPngPath("/icons/github_copilot.png")));
 
     // menu:(label options) Turn off Completions or Turn on Completions
@@ -110,18 +110,18 @@ public class ShowMenuBarMenuHandler extends CompoundContributionItem implements 
       items.add(new Separator());
       String label = languageServerSettingManager.isAutoShowCompletionEnabled() ? Messages.menu_turnOffCompletions
           : Messages.menu_turnOnCompletions;
-      items.add(createCommandItem("com.microsoft.copilot.eclipse.commands.autoShowCompletions", label,
+      items.add(createCommandItem("org.eclipse.copilot.commands.autoShowCompletions", label,
           UiUtils.buildImageDescriptorFromPngPath("/icons/blank.png")));
     }
 
     // menu: editKeyboardShortcuts
     items.add(new Separator());
-    items.add(createCommandItem("com.microsoft.copilot.eclipse.commands.openEditKeyboardShortcuts",
+    items.add(createCommandItem("org.eclipse.copilot.commands.openEditKeyboardShortcuts",
         Messages.menu_editKeyboardShortcuts,
         UiUtils.buildImageDescriptorFromPngPath("/icons/edit_keyboard_shortcuts.png")));
 
     // menu: editPreferences
-    items.add(createCommandItem("com.microsoft.copilot.eclipse.commands.openPreferences", Messages.menu_editPreferences,
+    items.add(createCommandItem("org.eclipse.copilot.commands.openPreferences", Messages.menu_editPreferences,
         UiUtils.buildImageDescriptorFromPngPath("/icons/edit_preferences.png")));
 
     // menu: giveFeedback
@@ -132,7 +132,7 @@ public class ShowMenuBarMenuHandler extends CompoundContributionItem implements 
         UiUtils.buildImageDescriptorFromPngPath("/icons/feedback_forum.png")));
 
     // menu: whatIsNew
-    items.add(createCommandItem("com.microsoft.copilot.eclipse.commands.showWhatIsNew", Messages.menu_whatIsNew,
+    items.add(createCommandItem("org.eclipse.copilot.commands.showWhatIsNew", Messages.menu_whatIsNew,
         UiUtils.buildImageDescriptorFromPngPath("/icons/blank.png")));
 
     // menu: Copilot settings and Sign Out
@@ -189,20 +189,20 @@ public class ShowMenuBarMenuHandler extends CompoundContributionItem implements 
       if (quotaStatus.getCopilotPlan() != CopilotPlan.free && quotaStatus.getCompletionsQuota().isUnlimited()
           && quotaStatus.getChatQuota().isUnlimited()) {
         String premiumRequestsText = calculator.getPremiumText();
-        this.premiumRequestsUsageItem = createCommandItem("com.microsoft.copilot.eclipse.commands.enabledDoNothing",
+        this.premiumRequestsUsageItem = createCommandItem("org.eclipse.copilot.commands.enabledDoNothing",
             premiumRequestsText, UiUtils.buildImageDescriptorFromPngPath("/icons/blank.png"));
         items.add(this.premiumRequestsUsageItem);
       }
 
       // Code completions useage
       String codeCompletionsText = calculator.getCompletionText();
-      this.completionsUsageItem = createCommandItem("com.microsoft.copilot.eclipse.commands.enabledDoNothing",
+      this.completionsUsageItem = createCommandItem("org.eclipse.copilot.commands.enabledDoNothing",
           codeCompletionsText, UiUtils.buildImageDescriptorFromPngPath("/icons/blank.png"));
       items.add(this.completionsUsageItem);
 
       // Chat messages usage
       String chatMessagesText = calculator.getChatText();
-      this.chatUsageItem = createCommandItem("com.microsoft.copilot.eclipse.commands.enabledDoNothing",
+      this.chatUsageItem = createCommandItem("org.eclipse.copilot.commands.enabledDoNothing",
           chatMessagesText, UiUtils.buildImageDescriptorFromPngPath("/icons/blank.png"));
       items.add(this.chatUsageItem);
 
@@ -211,13 +211,13 @@ public class ShowMenuBarMenuHandler extends CompoundContributionItem implements 
         // Premium requests usage when either of the rest plans is not unlimited
         if (!quotaStatus.getCompletionsQuota().isUnlimited() || !quotaStatus.getChatQuota().isUnlimited()) {
           String premiumRequestsText = calculator.getPremiumText();
-          this.premiumRequestsUsageItem = createCommandItem("com.microsoft.copilot.eclipse.commands.enabledDoNothing",
+          this.premiumRequestsUsageItem = createCommandItem("org.eclipse.copilot.commands.enabledDoNothing",
               premiumRequestsText, UiUtils.buildImageDescriptorFromPngPath("/icons/blank.png"));
           items.add(this.premiumRequestsUsageItem);
         }
 
         CommandContributionItem additionalPremiumRequestsDesc = createCommandItem(
-            "com.microsoft.copilot.eclipse.commands.disabledDoNothing",
+            "org.eclipse.copilot.commands.disabledDoNothing",
             Messages.menu_quota_additionalPremiumRequests
                 + (quotaStatus.getPremiumInteractionsQuota().isOveragePermitted() ? Messages.menu_quota_enabled
                     : Messages.menu_quota_disabled),
@@ -232,7 +232,7 @@ public class ShowMenuBarMenuHandler extends CompoundContributionItem implements 
     if (!StringUtils.isEmpty(quotaStatus.getResetDate())) {
       LocalDate resetDate = LocalDate.parse(quotaStatus.getResetDate());
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
-      items.add(createCommandItem("com.microsoft.copilot.eclipse.commands.disabledDoNothing",
+      items.add(createCommandItem("org.eclipse.copilot.commands.disabledDoNothing",
           Messages.menu_quota_allowanceReset + resetDate.format(formatter), null));
     }
 
@@ -240,7 +240,7 @@ public class ShowMenuBarMenuHandler extends CompoundContributionItem implements 
     ImageDescriptor upgradeIcon = UiUtils.buildImageDescriptorFromPngPath("/icons/quota/upgrade.png");
     if (quotaStatus.getCopilotPlan() == CopilotPlan.free) {
       // If the user is on a free plan, show a link to upgrade.
-      items.add(createCommandItem("com.microsoft.copilot.eclipse.commands.upgradeCopilotPlan",
+      items.add(createCommandItem("org.eclipse.copilot.commands.upgradeCopilotPlan",
           Messages.menu_quota_updateCopilotToPro, Messages.menu_quota_updateCopilotToProPlus, upgradeIcon));
     } else if (quotaStatus.getCopilotPlan() != CopilotPlan.business
         && quotaStatus.getCopilotPlan() != CopilotPlan.enterprise) {
@@ -258,10 +258,10 @@ public class ShowMenuBarMenuHandler extends CompoundContributionItem implements 
     }
     items.add(new Separator());
     if (CopilotStatusResult.NOT_AUTHORIZED.equals(status)) {
-      items.add(createCommandItem("com.microsoft.copilot.eclipse.commands.configureCopilotSettings",
+      items.add(createCommandItem("org.eclipse.copilot.commands.configureCopilotSettings",
           Messages.menu_configureGitHubCopilotSettings, null));
     }
-    items.add(createCommandItem("com.microsoft.copilot.eclipse.commands.signOut", Messages.menu_signOutOfGitHub,
+    items.add(createCommandItem("org.eclipse.copilot.commands.signOut", Messages.menu_signOutOfGitHub,
         UiUtils.buildImageDescriptorFromPngPath("/icons/signout.png")));
   }
 

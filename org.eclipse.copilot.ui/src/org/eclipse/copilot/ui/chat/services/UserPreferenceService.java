@@ -524,7 +524,7 @@ public class UserPreferenceService extends ChatBaseService implements CopilotAut
             dismissComboSelection(e, combo);
           } else if (trimmedModelNameWithMultiplier.equals(Messages.chat_addPremiumModels)) {
             dismissComboSelection(e, combo);
-            UiUtils.executeCommandWithParameters("com.microsoft.copilot.eclipse.commands.upgradeCopilotPlan", null);
+            UiUtils.executeCommandWithParameters("org.eclipse.copilot.commands.upgradeCopilotPlan", null);
           } else {
             setActiveModel(getModelNameFromModelWithMultiplier(modelNameWithMultiplier));
           }

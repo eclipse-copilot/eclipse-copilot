@@ -38,7 +38,7 @@ import org.eclipse.copilot.core.CopilotCore;
  */
 public class WhatsNewAction implements IIntroAction {
 
-  private static final String COMMAND = "com.microsoft.copilot.eclipse.commands.showWhatIsNew"; //$NON-NLS-1$
+  private static final String COMMAND = "org.eclipse.copilot.commands.showWhatIsNew"; //$NON-NLS-1$
 
   @Override
   public void run(IIntroSite site, Properties params) {
