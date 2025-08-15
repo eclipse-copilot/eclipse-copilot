@@ -333,7 +333,7 @@ public class UiUtils {
   public static void refreshCopilotMenu() {
     ICommandService commandService = PlatformUI.getWorkbench().getService(ICommandService.class);
     if (commandService != null) {
-      commandService.refreshElements("com.microsoft.copilot.eclipse.commands.showStatusBarMenu", null);
+      commandService.refreshElements("org.eclipse.copilot.commands.showStatusBarMenu", null);
     }
   }
 

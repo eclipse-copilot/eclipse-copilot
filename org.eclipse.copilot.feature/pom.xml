@@ -7,7 +7,7 @@
 		<artifactId>eclipse-copilot</artifactId>
 		<version>0.10.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>com.microsoft.copilot.eclipse.feature</artifactId>
+	<artifactId>org.eclipse.copilot.feature</artifactId>
 	<packaging>eclipse-feature</packaging>
 	<name>${base.name} :: Feature</name>
 </project>

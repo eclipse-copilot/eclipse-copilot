@@ -7,7 +7,7 @@
 		<artifactId>eclipse-copilot</artifactId>
 		<version>0.10.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>com.microsoft.copilot.eclipse.core</artifactId>
+	<artifactId>org.eclipse.copilot.core</artifactId>
 	<packaging>eclipse-plugin</packaging>
 	<name>${base.name} :: Core</name>
 	<build>

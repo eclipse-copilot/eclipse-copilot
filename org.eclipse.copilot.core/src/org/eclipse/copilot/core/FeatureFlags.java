@@ -51,7 +51,7 @@ public class FeatureFlags {
     // Directly access the instance scope of Eclipse preferences, which are preferences that are specific to the
     // current workspace. So the code won't need to involve any component from the UI plugin.
     // The file name for the preferences is "org.eclipse.copilot.ui.prefs"
-    IEclipsePreferences uiPrefs = InstanceScope.INSTANCE.getNode("com.microsoft.copilot.eclipse.ui");
+    IEclipsePreferences uiPrefs = InstanceScope.INSTANCE.getNode("org.eclipse.copilot.ui");
     if (uiPrefs != null) {
       return uiPrefs.getBoolean(Constants.WORKSPACE_CONTEXT_ENABLED, false);
     }

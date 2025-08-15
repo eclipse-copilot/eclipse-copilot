@@ -33,7 +33,7 @@ class CopilotUiTests {
 
     Job.getJobManager().join(CopilotCore.INIT_JOB_FAMILY, null);
 
-    Bundle bundle = Platform.getBundle("com.microsoft.copilot.eclipse.core");
+    Bundle bundle = Platform.getBundle("org.eclipse.copilot.core");
 
     assertNotNull(bundle);
     assertEquals(Bundle.ACTIVE, bundle.getState());

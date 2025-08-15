@@ -66,7 +66,7 @@ public class ShowContextMenuHandler extends CompoundContributionItem {
     
     // Add "Add to References" command item
     CommandContributionItemParameter p = new CommandContributionItemParameter(
-        win, null, "com.microsoft.copilot.eclipse.commands.addToReferences", CommandContributionItem.STYLE_PUSH);
+        win, null, "org.eclipse.copilot.commands.addToReferences", CommandContributionItem.STYLE_PUSH);
     submenu.add(new CommandContributionItem(p));
     items.add(submenu);
 
