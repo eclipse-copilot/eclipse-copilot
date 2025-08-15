@@ -26,8 +26,6 @@ import org.eclipse.core.net.proxy.IProxyChangeEvent;
 import org.eclipse.core.net.proxy.IProxyChangeListener;
 import org.eclipse.core.net.proxy.IProxyData;
 import org.eclipse.core.net.proxy.IProxyService;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -70,7 +68,6 @@ public class LanguageServerSettingManager implements IProxyChangeListener, IProp
     this.copilotLanguageServerConnection = conn;
     this.proxyService = proxyService;
     this.preferenceStore = preferenceStore;
-    migratePrefOnChangeBundleName();
 
     // add listeners
     proxyService.addProxyChangeListener(this);
@@ -312,42 +309,6 @@ public class LanguageServerSettingManager implements IProxyChangeListener, IProp
     githubSettings.setWorkspaceCopilotInstructions(
         isEnabled ? preferenceStore.getString(Constants.CUSTOM_INSTRUCTIONS_WORKSPACE) : null);
     return new CopilotLanguageServerSettings(null, null, null, githubSettings);
-  }
-
-  /**
-   * This method is called when the plugin is loaded to ensure that any preferences stored under the old bundle name are
-   * migrated to the new one.
-   */
-  private void migratePrefOnChangeBundleName() {
-    IEclipsePreferences newPrefs = InstanceScope.INSTANCE.getNode("org.eclipse.copilot.ui");
-    if (newPrefs == null || newPrefs.getBoolean("hasMigratedOnChangeBundleName", false)) {
-      return;
-    }
-
-    IEclipsePreferences oldPrefs = InstanceScope.INSTANCE.getNode("com.microsoft.copilot.eclipse.ui");
-    if (oldPrefs == null) {
-      return;
-    }
-
-    try {
-      String[] keys = oldPrefs.keys();
-      if (keys.length > 0) {
-        for (String key : keys) {
-          String value = oldPrefs.get(key, null);
-          if (value != null) {
-            newPrefs.put(key, value);
-          }
-        }
-
-        CopilotCore.LOGGER.info("Migrated " + keys.length + " preferences from previous bundle name");
-      }
-
-      // Set migration flag
-      newPrefs.putBoolean("hasMigratedOnChangeBundleName", true);
-      newPrefs.flush();
-    } catch (Exception e) {
-      CopilotCore.LOGGER.error("Failed to migrate preferences", e);
-    }
   }
 
   /**

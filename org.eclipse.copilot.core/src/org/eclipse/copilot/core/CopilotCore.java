@@ -23,6 +23,8 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.lsp4e.LanguageServerWrapper;
 import org.eclipse.lsp4e.LanguageServersRegistry;
@@ -75,6 +77,7 @@ public class CopilotCore extends Plugin {
 
   @Override
   public void start(BundleContext context) throws Exception {
+    migratePrefOnChangeBundleName();
     init(context);
   }
 
@@ -217,5 +220,41 @@ public class CopilotCore extends Plugin {
 
   public void setChatServiceManager(IChatServiceManager chatServiceManager) {
     this.chatServiceManager = chatServiceManager;
+  }
+
+  /**
+   * This method is called when the plugin is loaded to ensure that any preferences stored under the old bundle name are
+   * migrated to the new one.
+   */
+  private void migratePrefOnChangeBundleName() {
+    IEclipsePreferences newPrefs = InstanceScope.INSTANCE.getNode("org.eclipse.copilot.ui");
+    if (newPrefs == null || newPrefs.getBoolean("hasMigratedOnChangeBundleName", false)) {
+      return;
+    }
+
+    IEclipsePreferences oldPrefs = InstanceScope.INSTANCE.getNode("com.microsoft.copilot.eclipse.ui");
+    if (oldPrefs == null) {
+      return;
+    }
+
+    try {
+      String[] keys = oldPrefs.keys();
+      if (keys.length > 0) {
+        for (String key : keys) {
+          String value = oldPrefs.get(key, null);
+          if (value != null) {
+            newPrefs.put(key, value);
+          }
+        }
+
+        CopilotCore.LOGGER.info("Migrated " + keys.length + " preferences from previous bundle name");
+      }
+
+      // Set migration flag
+      newPrefs.putBoolean("hasMigratedOnChangeBundleName", true);
+      newPrefs.flush();
+    } catch (Exception e) {
+      CopilotCore.LOGGER.error("Failed to migrate preferences", e);
+    }
   }
 }
