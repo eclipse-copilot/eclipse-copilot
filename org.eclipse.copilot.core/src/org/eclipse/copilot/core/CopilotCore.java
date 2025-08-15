@@ -77,7 +77,7 @@ public class CopilotCore extends Plugin {
 
   @Override
   public void start(BundleContext context) throws Exception {
-    migratePrefOnChangeBundleName();
+    migratePrefFromLegacyPlugin();
     init(context);
   }
 
@@ -226,7 +226,7 @@ public class CopilotCore extends Plugin {
    * This method is called when the plugin is loaded to ensure that any preferences stored under the old bundle name are
    * migrated to the new one.
    */
-  private void migratePrefOnChangeBundleName() {
+  private void migratePrefFromLegacyPlugin() {
     IEclipsePreferences newPrefs = InstanceScope.INSTANCE.getNode("org.eclipse.copilot.ui");
     if (newPrefs == null || newPrefs.getBoolean("hasMigratedOnChangeBundleName", false)) {
       return;
