@@ -7,7 +7,7 @@
 		<artifactId>eclipse-copilot</artifactId>
 		<version>0.10.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>com.microsoft.copilot.eclipse.repository</artifactId>
+	<artifactId>org.eclipse.copilot.repository</artifactId>
 	<packaging>eclipse-repository</packaging>
 	<name>${base.name} :: Repository</name>
 

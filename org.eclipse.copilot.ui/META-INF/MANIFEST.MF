@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Copilot UI
-Bundle-SymbolicName: com.microsoft.copilot.eclipse.ui;singleton:=true
+Bundle-SymbolicName: org.eclipse.copilot.ui;singleton:=true
 Bundle-Version: 0.10.0.qualifier
 Bundle-Localization: plugin
 Export-Package: org.eclipse.copilot.ui,
@@ -17,10 +17,10 @@ Export-Package: org.eclipse.copilot.ui,
  org.eclipse.copilot.ui.utils
 Bundle-Activator: org.eclipse.copilot.ui.CopilotUi
 Bundle-RequiredExecutionEnvironment: JavaSE-17
-Automatic-Module-Name: com.microsoft.copilot.eclipse.ui
+Automatic-Module-Name: org.eclipse.copilot.ui
 Bundle-ActivationPolicy: lazy
 Import-Package: org.osgi.framework;version="[1.10.0,2.0.0)"
-Require-Bundle: com.microsoft.copilot.eclipse.core;bundle-version="0.10.0",
+Require-Bundle: org.eclipse.copilot.core;bundle-version="0.10.0",
  org.eclipse.ui.ide;bundle-version="3.22.100",
  org.eclipse.ui.workbench.texteditor;bundle-version="3.17.300",
  org.eclipse.ui;bundle-version="3.205.100",

@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Copilot Core
-Bundle-SymbolicName: com.microsoft.copilot.eclipse.core;singleton:=true
+Bundle-SymbolicName: org.eclipse.copilot.core;singleton:=true
 Bundle-Version: 0.10.0.qualifier
 Export-Package: org.eclipse.copilot.core,
  org.eclipse.copilot.core.chat,
@@ -17,7 +17,7 @@ Export-Package: org.eclipse.copilot.core,
  org.eclipse.copilot.core.utils
 Bundle-Activator: org.eclipse.copilot.core.CopilotCore
 Bundle-RequiredExecutionEnvironment: JavaSE-17
-Automatic-Module-Name: com.microsoft.copilot.eclipse.core
+Automatic-Module-Name: org.eclipse.copilot.core
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.ui,
  org.eclipse.ui.browser,

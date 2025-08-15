@@ -129,7 +129,7 @@ public class OpenQuickStartHandler extends AbstractHandler {
             IHandlerService handlerService = (IHandlerService) PlatformUI.getWorkbench()
                 .getService(IHandlerService.class);
             try {
-              handlerService.executeCommand("com.microsoft.copilot.eclipse.commands.openChatView", null);
+              handlerService.executeCommand("org.eclipse.copilot.commands.openChatView", null);
             } catch (Exception ex) {
               CopilotCore.LOGGER.error("Failed to open chat view", ex);
             }

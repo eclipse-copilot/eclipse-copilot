@@ -41,9 +41,9 @@ public class OpenPreferencesHandler extends AbstractHandler {
     Shell shell = SwtUtils.getShellFromEvent(event);
     PreferenceDialog dialog;
 
-    String activePageId = event.getParameter("com.microsoft.copilot.eclipse.commands.openPreferences.activePageId");
+    String activePageId = event.getParameter("org.eclipse.copilot.commands.openPreferences.activePageId");
     if (!StringUtils.isBlank(activePageId)) {
-      String[] pageIds = event.getParameter("com.microsoft.copilot.eclipse.commands.openPreferences.pageIds")
+      String[] pageIds = event.getParameter("org.eclipse.copilot.commands.openPreferences.pageIds")
           .split(",");
       dialog = PreferencesUtil.createPreferenceDialogOn(shell, activePageId, pageIds, null);
     } else {
