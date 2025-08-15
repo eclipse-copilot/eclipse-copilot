@@ -62,6 +62,10 @@ public class CopilotCore extends Plugin {
    */
   public static final String INIT_JOB_FAMILY = "org.eclipse.copilot.core.initJob";
 
+  // TODO: Remove these 2 constant after several releases since the migration will be completed in next release.
+  private static final String LEGACY_PREF_NODE_NAME = "com.microsoft.copilot.eclipse.ui";
+  private static final String HAS_MIGRATED_PREF_FROM_LEGACY_PLUGIN = "hasMigratedPrefFromLegacyPlugin";
+
   /**
    * Creates the Copilot core plugin. The plugin is created automatically by the Eclipse framework. Clients must not
    * call this constructor.
@@ -223,16 +227,17 @@ public class CopilotCore extends Plugin {
   }
 
   /**
-   * This method is called when the plugin is loaded to ensure that any preferences stored under the old bundle name are
-   * migrated to the new one.
+   * TODO: Remove this method after several releases since the migration will be completed in next release. This method
+   * is called when the plugin is loaded to ensure that any preferences stored under the old bundle name are migrated to
+   * the new one.
    */
   private void migratePrefFromLegacyPlugin() {
     IEclipsePreferences newPrefs = InstanceScope.INSTANCE.getNode("org.eclipse.copilot.ui");
-    if (newPrefs == null || newPrefs.getBoolean("hasMigratedPrefFromLegacyPlugin", false)) {
+    if (newPrefs == null || newPrefs.getBoolean(HAS_MIGRATED_PREF_FROM_LEGACY_PLUGIN, false)) {
       return;
     }
 
-    IEclipsePreferences oldPrefs = InstanceScope.INSTANCE.getNode("com.microsoft.copilot.eclipse.ui");
+    IEclipsePreferences oldPrefs = InstanceScope.INSTANCE.getNode(LEGACY_PREF_NODE_NAME);
     if (oldPrefs == null) {
       return;
     }
@@ -251,7 +256,7 @@ public class CopilotCore extends Plugin {
       }
 
       // Set migration flag
-      newPrefs.putBoolean("hasMigratedPrefFromLegacyPlugin", true);
+      newPrefs.putBoolean(HAS_MIGRATED_PREF_FROM_LEGACY_PLUGIN, true);
       newPrefs.flush();
     } catch (Exception e) {
       CopilotCore.LOGGER.error("Failed to migrate preferences", e);
