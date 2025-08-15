@@ -62,7 +62,7 @@ public class CopilotCore extends Plugin {
    */
   public static final String INIT_JOB_FAMILY = "org.eclipse.copilot.core.initJob";
 
-  // TODO: Remove these 2 constant after several releases since the migration will be completed in next release.
+  // TODO: Remove these 2 constants after several releases since the migration will be completed in the next.
   private static final String LEGACY_PREF_NODE_NAME = "com.microsoft.copilot.eclipse.ui";
   private static final String HAS_MIGRATED_PREF_FROM_LEGACY_PLUGIN = "hasMigratedPrefFromLegacyPlugin";
 
