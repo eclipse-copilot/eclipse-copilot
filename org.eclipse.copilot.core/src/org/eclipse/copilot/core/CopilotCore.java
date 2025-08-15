@@ -228,7 +228,7 @@ public class CopilotCore extends Plugin {
    */
   private void migratePrefFromLegacyPlugin() {
     IEclipsePreferences newPrefs = InstanceScope.INSTANCE.getNode("org.eclipse.copilot.ui");
-    if (newPrefs == null || newPrefs.getBoolean("hasMigratedOnChangeBundleName", false)) {
+    if (newPrefs == null || newPrefs.getBoolean("hasMigratedPrefFromLegacyPlugin", false)) {
       return;
     }
 
@@ -251,7 +251,7 @@ public class CopilotCore extends Plugin {
       }
 
       // Set migration flag
-      newPrefs.putBoolean("hasMigratedOnChangeBundleName", true);
+      newPrefs.putBoolean("hasMigratedPrefFromLegacyPlugin", true);
       newPrefs.flush();
     } catch (Exception e) {
       CopilotCore.LOGGER.error("Failed to migrate preferences", e);
