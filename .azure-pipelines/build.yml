@@ -29,13 +29,13 @@ extends:
       - stage: Build
         jobs:
           - job: Build
-            displayName: GitHub-Copilot-Eclipse-Nightly
+            displayName: Eclipse-Copilot-Build
             templateContext:
               outputs:
                 - output: pipelineArtifact
-                  artifactName: plugin
-                  targetPath: '$(Build.ArtifactStagingDirectory)/plugin'
-                  displayName: "Publish Artifact: plugin"
+                  artifactName: output
+                  targetPath: '$(Build.ArtifactStagingDirectory)/output'
+                  displayName: "Publish Artifact: output"
             steps:
               - checkout: self
                 fetchTags: false
@@ -53,16 +53,16 @@ extends:
                   version: '20.x'
 
               - bash: npm i
-                workingDirectory: com.microsoft.copilot.eclipse.core/copilot-agent
+                workingDirectory: org.eclipse.copilot.core/copilot-agent
                 displayName: Install Copilot LS
 
               - bash: ./mvnw clean package
                 displayName: 'Run Maven Clean and Package'
 
               - task: CopyFiles@2
-                displayName: Copy plugin zip
+                displayName: Copy output
                 inputs:
                   Contents: |
                     org.eclipse.copilot.repository/target/repository
                     org.eclipse.copilot.repository/target/org.eclipse.copilot.repository-*.zip
-                  TargetFolder: '$(Build.ArtifactStagingDirectory)/plugin'
+                  TargetFolder: '$(Build.ArtifactStagingDirectory)/output'
