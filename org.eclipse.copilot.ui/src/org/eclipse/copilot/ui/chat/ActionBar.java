@@ -295,7 +295,7 @@ public class ActionBar extends Composite implements NewConversationListener {
     // Get parent composite and disable redraw to avoid flickering when references files are updated
     Composite actionBarParent = this.getParent();
     actionBarParent.setRedraw(false);
-    
+
     try {
       for (Control child : cmpFileRef.getChildren()) {
         if (child instanceof ReferencedFile && !(child instanceof CurrentReferencedFile)) {
@@ -311,7 +311,7 @@ public class ActionBar extends Composite implements NewConversationListener {
           new ReferencedFile(this.cmpFileRef, file, false);
         }
       }
-      
+
     } finally {
       actionBarParent.setRedraw(true);
       refreshLayout();
