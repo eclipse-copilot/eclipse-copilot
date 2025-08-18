@@ -63,6 +63,6 @@ extends:
                 displayName: Copy output
                 inputs:
                   Contents: |
-                    org.eclipse.copilot.repository/target/repository
+                    org.eclipse.copilot.repository/target/repository/**
                     org.eclipse.copilot.repository/target/org.eclipse.copilot.repository-*.zip
                   TargetFolder: '$(Build.ArtifactStagingDirectory)/output'
