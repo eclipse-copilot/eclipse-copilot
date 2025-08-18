@@ -129,7 +129,7 @@ public class UserPreferenceService extends ChatBaseService implements CopilotAut
         // the next sign in account.
         if (statusResult.isNotSignedIn()) {
           clearUserPreferenceCache();
-          this.inputNavigation = new InputNavigation();
+          this.inputNavigation = null;
         }
       }
     };
@@ -822,6 +822,10 @@ public class UserPreferenceService extends ChatBaseService implements CopilotAut
    * Reset the input history cursor to the latest input.
    */
   public void resetInputHistoryCursor() {
+    if (inputNavigation == null) {
+      return;
+    }
+
     inputNavigation.updateCursorPosition(inputNavigation.size());
   }
 
