@@ -44,6 +44,7 @@
 				</dependencies>
 				<configuration>
 					<configLocation>checkstyle.xml</configLocation>
+					<headerLocation>java.header</headerLocation>
 					<encoding>UTF-8</encoding>
 					<consoleOutput>true</consoleOutput>
 					<failsOnError>true</failsOnError>
