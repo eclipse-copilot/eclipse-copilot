@@ -64,5 +64,5 @@ extends:
                 inputs:
                   Contents: |
                     org.eclipse.copilot.repository/target/repository
-                    org.eclipse.copilot.repository/target/org.eclipse.copilot.repository-0.10.1-SNAPSHOT.zip
+                    org.eclipse.copilot.repository/target/org.eclipse.copilot.repository-*.zip
                   TargetFolder: '$(Build.ArtifactStagingDirectory)/plugin'
