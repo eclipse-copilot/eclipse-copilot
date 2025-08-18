@@ -129,7 +129,7 @@ public class UserPreferenceService extends ChatBaseService implements CopilotAut
         // the next sign in account.
         if (statusResult.isNotSignedIn()) {
           clearUserPreferenceCache();
-          this.inputNavigation = null;
+          this.inputNavigation = new InputNavigation();
         }
       }
     };
