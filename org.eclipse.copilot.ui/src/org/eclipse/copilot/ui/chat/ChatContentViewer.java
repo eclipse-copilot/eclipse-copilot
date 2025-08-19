@@ -284,7 +284,7 @@ public class ChatContentViewer extends ScrolledComposite {
 
     this.setMinHeight(contentHeight);
     this.setMinWidth(containerSize.x);
-    this.requestLayout();
+    this.layout(true, true);
   }
 
   /**
