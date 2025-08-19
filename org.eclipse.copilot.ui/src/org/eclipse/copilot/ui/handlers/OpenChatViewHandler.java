@@ -10,18 +10,19 @@
 package org.eclipse.copilot.ui.handlers;
 
 import org.apache.commons.lang3.StringUtils;
-import org.eclipse.copilot.core.Constants;
-import org.eclipse.copilot.core.CopilotCore;
-import org.eclipse.copilot.core.lsp.protocol.ChatMode;
-import org.eclipse.copilot.ui.CopilotUi;
-import org.eclipse.copilot.ui.chat.ActionBar;
-import org.eclipse.copilot.ui.chat.ChatView;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+
+import org.eclipse.copilot.core.Constants;
+import org.eclipse.copilot.core.CopilotCore;
+import org.eclipse.copilot.core.lsp.protocol.ChatMode;
+import org.eclipse.copilot.ui.CopilotUi;
+import org.eclipse.copilot.ui.chat.ActionBar;
+import org.eclipse.copilot.ui.chat.ChatView;
 
 /**
  * Handler for opening the chat view.
