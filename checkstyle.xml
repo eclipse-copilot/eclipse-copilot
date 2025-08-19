@@ -59,6 +59,12 @@
              value="^package.*|^import.*|href\s*=\s*&quot;[^&quot;]*&quot;|http://|https://|ftp://"/>
   </module>
 
+  <module name="Header">
+    <property name="headerFile" value="java.header"/>
+    <property name="fileExtensions" value="java"/>
+    <property name="ignoreLines" value="2"/>
+  </module>
+
   <module name="TreeWalker">
     <module name="OuterTypeFilename"/>
     <module name="IllegalTokenText">

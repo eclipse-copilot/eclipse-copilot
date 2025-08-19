@@ -3,6 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Copilot Core
 Bundle-SymbolicName: org.eclipse.copilot.core;singleton:=true
 Bundle-Version: 0.10.1.qualifier
+Bundle-Vendor: Eclipse Copilot
 Export-Package: org.eclipse.copilot.core,
  org.eclipse.copilot.core.chat,
  org.eclipse.copilot.core.chat.service,
