@@ -10,7 +10,9 @@
 package org.eclipse.copilot.ui.chat.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -53,6 +55,15 @@ public class McpConfigService extends ChatBaseService implements IMcpConfigServi
 
   private IEventBroker eventBroker;
 
+  // MCP registration extension point
+  private List<String> mcpRegTrustedBundles = new ArrayList<>();
+  private Map<String, String> mcpRegBundleMap = new HashMap<>(); // bundle name : plug-in name
+  // Severs information for MCP registration
+  private Map<String, Object> mcpRegServerMap = new HashMap<>(); // mcp server name : value, wait for merge
+  // Dialog confirmation for MCP registration of these plugins
+  private Map<String, String> mcpRegDisplayInfo = new HashMap<>(); // plug-in name : mcp servers collection
+  private List<String> mcpRegDisabledServerList = new ArrayList<>();
+
   /**
    * Constructor for the McpConfigService.
    */
@@ -67,6 +78,22 @@ public class McpConfigService extends ChatBaseService implements IMcpConfigServi
 
     initializeMcpToolUpdateEvent();
     initializeMcpFeatureFlagUpdateEvent();
+    loadMcpRegistrationData();
+    confirmThirdPartyMcp();
+  }
+
+  private void loadMcpRegistrationData() {
+
+  }
+
+  public Map<String, Object> getMcpRegServerMap() {
+    return mcpRegServerMap;
+  }
+
+  private void confirmThirdPartyMcp() {
+    // Show a confirmation dialog.
+    // Record disabled mcp server names
+    // Merge all mcp servers for setting manager -> move to setMcpServers
   }
 
   private void initializeMcpToolUpdateEvent() {
