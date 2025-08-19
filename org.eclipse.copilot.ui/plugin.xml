@@ -16,7 +16,7 @@
 
 	<!-- Example usage of the MCP Registration extension point -->
 	<extension
-		point="com.microsoft.copilot.eclipse.ui.mcpRegistration">
+		point="org.eclipse.copilot.ui.mcpRegistration">
 		<provider
 			class="com.microsoft.copilot.eclipse.ui.extensions.ExampleMcpRegistrationProvider">
 		</provider>

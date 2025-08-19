@@ -9,8 +9,13 @@
 
 package org.eclipse.copilot.ui.chat.services;
 
+import java.security.MessageDigest;
+import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HexFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -19,12 +24,23 @@ import java.util.concurrent.ExecutionException;
 import org.eclipse.core.databinding.observable.sideeffect.ISideEffect;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.osgi.signedcontent.SignedContent;
+import org.eclipse.osgi.signedcontent.SignedContentFactory;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.event.EventHandler;
 
 import org.eclipse.copilot.core.CopilotCore;
@@ -34,6 +50,7 @@ import org.eclipse.copilot.core.lsp.protocol.DidChangeFeatureFlagsParams;
 import org.eclipse.copilot.core.lsp.protocol.McpOauthRequest;
 import org.eclipse.copilot.core.lsp.protocol.McpServerToolsCollection;
 import org.eclipse.copilot.ui.CopilotUi;
+import org.eclipse.copilot.ui.extensions.IMcpRegistrationProvider;
 import org.eclipse.copilot.ui.i18n.Messages;
 import org.eclipse.copilot.ui.preferences.McpPreferencePage;
 
@@ -56,6 +73,9 @@ public class McpConfigService extends ChatBaseService implements IMcpConfigServi
   private IEventBroker eventBroker;
 
   // MCP registration extension point
+  private static final String EXTENSION_POINT_ID = "com.microsoft.copilot.eclipse.ui.mcpRegistration";
+  private static final String ELEMENT_PROVIDER = "provider";
+  private static final String ATTRIBUTE_CLASS = "class";
   private List<String> mcpRegTrustedBundles = new ArrayList<>();
   private Map<String, String> mcpRegBundleMap = new HashMap<>(); // bundle name : plug-in name
   // Severs information for MCP registration
@@ -83,7 +103,100 @@ public class McpConfigService extends ChatBaseService implements IMcpConfigServi
   }
 
   private void loadMcpRegistrationData() {
+    IExtensionRegistry registry = Platform.getExtensionRegistry();
+    IExtensionPoint extensionPoint = registry.getExtensionPoint(EXTENSION_POINT_ID);
 
+    if (extensionPoint == null) {
+      return;
+    }
+
+    IExtension[] extensions = extensionPoint.getExtensions();
+
+    for (IExtension extension : extensions) {
+      String contributorName = extension.getContributor().getName();
+      IConfigurationElement[] configElements = extension.getConfigurationElements();
+
+      for (IConfigurationElement element : configElements) {
+        if (ELEMENT_PROVIDER.equals(element.getName())) {
+          try {
+            Object provider = element.createExecutableExtension(ATTRIBUTE_CLASS);
+            if (provider instanceof IMcpRegistrationProvider) {
+              IMcpRegistrationProvider mcpProvider = (IMcpRegistrationProvider) provider;
+              String mcpServers = mcpProvider.getMcpServerConfigurations();
+              mcpRegDisplayInfo.put(contributorName, mcpServers);
+            }
+          } catch (Exception e) {
+            CopilotCore.LOGGER.error("Failed to get display info for provider: " 
+                + element.getAttribute(ATTRIBUTE_CLASS), e);
+          }
+        }
+      }
+    }
+  }
+  
+  private boolean isMcpFromSignedBundle(String contributorName) {
+    Bundle bundle = Platform.getBundle(contributorName);
+
+    try {
+      // Obtain SignedContentFactory via OSGi service
+      SignedContent signedContent = null;
+      BundleContext ctx = FrameworkUtil.getBundle(McpConfigService.class).getBundleContext();
+      if (ctx != null) {
+        ServiceReference<SignedContentFactory> ref = ctx.getServiceReference(SignedContentFactory.class);
+        if (ref != null) {
+          SignedContentFactory factory = ctx.getService(ref);
+          try {
+            if (factory != null && bundle != null) {
+              signedContent = factory.getSignedContent(bundle);
+            }
+          } finally {
+            ctx.ungetService(ref);
+          }
+        }
+      }
+
+      if (signedContent != null && signedContent.isSigned()) {
+        CopilotCore.LOGGER.error("Extension from " + contributorName + " is signed.", null);
+        Arrays.stream(signedContent.getSignerInfos()).forEach(signer -> {
+          try {
+            Certificate[] chain = signer.getCertificateChain();
+            if (chain != null && chain.length > 0) {
+              if (chain[0] instanceof X509Certificate) {
+                X509Certificate x509Cert = (X509Certificate) chain[0];
+                String fingerprint = calculateCertificateFingerprint(x509Cert);
+                CopilotCore.LOGGER.error("Signer: " + x509Cert.getSubjectX500Principal().getName(), null);
+                CopilotCore.LOGGER.error("Certificate thumbprint (SHA-256): " + fingerprint, null);
+              } else {
+                CopilotCore.LOGGER.error("Signer certificate type: " + chain[0].getType(), null);
+              }
+            }
+          } catch (Exception ignore) {
+            // ignore
+          }
+        });
+        
+        return true;
+      } else {
+        CopilotCore.LOGGER.error("Extension from " + contributorName + " is NOT signed.", null);
+      }
+    } catch (Exception e) {
+      System.err.println("Failed to validate signature for " + contributorName + ": " + e.getMessage());
+    }
+    
+    return false;
+  }
+  
+  /**
+   * Calculate SHA-256 fingerprint of certificate.
+   */
+  private String calculateCertificateFingerprint(X509Certificate cert) {
+    try {
+      MessageDigest md = MessageDigest.getInstance("SHA-256");
+      byte[] fingerprint = md.digest(cert.getEncoded());
+      return HexFormat.of().withUpperCase().withDelimiter(":").formatHex(fingerprint);
+    } catch (Exception e) {
+      return "Unable to calculate fingerprint: " + e.getMessage();
+    }
   }
 
   public Map<String, Object> getMcpRegServerMap() {
