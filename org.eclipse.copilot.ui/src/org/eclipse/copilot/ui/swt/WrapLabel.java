@@ -127,6 +127,16 @@ public class WrapLabel {
     label.requestLayout();
   }
 
+  /**
+   * Set data for the label.
+   *
+   * @param key the key for the data
+   * @param value the value to set
+   */
+  public void setData(String key, Object value) {
+    label.setData(key, value);
+  }
+
   private void updateWidth() {
     Composite parent = label.getParent();
     int parentWidth = parent.getClientArea().width;

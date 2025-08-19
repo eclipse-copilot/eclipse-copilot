@@ -53,9 +53,6 @@ class ChatInputTextViewerTests {
   @AfterEach
   void tearDown() {
     SwtUtils.invokeOnDisplayThread(() -> {
-      if (chatInputTextViewer != null) {
-        chatInputTextViewer.dispose();
-      }
       if (shell != null && !shell.isDisposed()) {
         shell.dispose();
       }
