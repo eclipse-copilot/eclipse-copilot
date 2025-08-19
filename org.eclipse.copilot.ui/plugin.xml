@@ -7,6 +7,20 @@
 			class="org.eclipse.copilot.ui.StartUp">
 		</startup>
 	</extension>
+	
+	<!-- Extension Points Definition -->
+	<extension-point
+		id="mcpRegistration"
+		name="MCP Registration"
+		schema="schema/mcpRegistration.exsd"/>
+
+	<!-- Example usage of the MCP Registration extension point -->
+	<extension
+		point="com.microsoft.copilot.eclipse.ui.mcpRegistration">
+		<provider
+			class="com.microsoft.copilot.eclipse.ui.extensions.ExampleMcpRegistrationProvider">
+		</provider>
+	</extension>
 
 	<!-- Menus registration -->
 	<extension
