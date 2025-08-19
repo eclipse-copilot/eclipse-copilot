@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.eclipse.copilot</groupId>
+		<artifactId>eclipse-copilot</artifactId>
+		<version>0.10.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>org.eclipse.copilot.api</artifactId>
+	<packaging>eclipse-plugin</packaging>
+	<name>${base.name} :: API</name>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+                    <dependency-resolution>
+                        <optionalDependencies>ignore</optionalDependencies>
+                        <profileProperties>
+                            <org.eclipse.copilot>true</org.eclipse.copilot>
+                        </profileProperties>
+                    </dependency-resolution>
+                </configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

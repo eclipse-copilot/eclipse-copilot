@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <repository-reference location="https://download.eclipse.org/tools/cdt/builds/12.2/cdt-12.2.0-m2a/" description="CDT updates" enabled="true"></repository-reference>
    <feature id="org.eclipse.copilot.feature" version="0.10.1.qualifier">
       <category name="org.eclipse.copilot.category"/>
    </feature>
    <category-def name="org.eclipse.copilot.category" label="GitHub Copilot"/>
+   <iu>
+      <query>
+         <expression type="match">id == 'org.eclipse.copilot.ui.terminal'</expression>
+      </query>
+   </iu>
+   <iu>
+      <query>
+         <expression type="match">id == 'org.eclipse.copilot.ui.terminal.legacy'</expression>
+      </query>
+   </iu>
 </site>
