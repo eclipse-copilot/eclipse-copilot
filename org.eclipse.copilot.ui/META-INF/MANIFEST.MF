@@ -3,6 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Copilot UI
 Bundle-SymbolicName: org.eclipse.copilot.ui;singleton:=true
 Bundle-Version: 0.10.1.qualifier
+Bundle-Vendor: Eclipse Copilot
 Bundle-Localization: plugin
 Export-Package: org.eclipse.copilot.ui,
  org.eclipse.copilot.ui.chat,
