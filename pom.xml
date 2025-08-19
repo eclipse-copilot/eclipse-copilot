@@ -20,6 +20,9 @@
 		<module>org.eclipse.copilot.core</module>
 		<module>org.eclipse.copilot.ui</module>
 
+		<!-- branding -->
+		<module>org.eclipse.copilot.branding</module>
+
 		<!-- features and update site -->
 		<module>org.eclipse.copilot.feature</module>
 		<module>org.eclipse.copilot.repository</module>
