@@ -18,7 +18,7 @@
 	<extension
 		point="org.eclipse.copilot.ui.mcpRegistration">
 		<provider
-			class="com.microsoft.copilot.eclipse.ui.extensions.ExampleMcpRegistrationProvider">
+			class="org.eclipse.copilot.ui.extensions.ExampleMcpRegistrationProvider">
 		</provider>
 	</extension>
 

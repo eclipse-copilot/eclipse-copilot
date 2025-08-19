@@ -81,7 +81,36 @@ public class McpConfigService extends ChatBaseService implements IMcpConfigServi
   // Severs information for MCP registration
   private Map<String, Object> mcpRegServerMap = new HashMap<>(); // mcp server name : value, wait for merge
   // Dialog confirmation for MCP registration of these plugins
-  private Map<String, String> mcpRegDisplayInfo = new HashMap<>(); // plug-in name : mcp servers collection
+
+  public static class McpRegistrationInfo {
+    boolean isTrusted;
+    boolean isApproved;
+    String mcpServers;
+
+    McpRegistrationInfo(boolean isTrusted, boolean isEnabled, String mcpServers) {
+      this.isTrusted = isTrusted;
+      this.isApproved = isEnabled;
+      this.mcpServers = mcpServers;
+    }
+
+    public boolean isTrusted() {
+      return isTrusted;
+    }
+
+    public boolean isApproved() {
+      return isApproved;
+    }
+
+    public void setApproved(boolean approved) {
+      this.isApproved = approved;
+    }
+
+    public String getMcpServers() {
+      return mcpServers;
+    }
+  }
+
+  private Map<String, McpRegistrationInfo> mcpRegInfoMap = new HashMap<>(); // plug-in bundle name : display info
   private List<String> mcpRegDisabledServerList = new ArrayList<>();
 
   /**
@@ -100,6 +129,15 @@ public class McpConfigService extends ChatBaseService implements IMcpConfigServi
     initializeMcpFeatureFlagUpdateEvent();
     loadMcpRegistrationData();
     confirmThirdPartyMcp();
+  }
+
+  public Map<String, McpRegistrationInfo> getMcpRegInfoMap() {
+    return mcpRegInfoMap;
+  }
+
+  private void confirmThirdPartyMcp() {
+    // TODO: Show an approval dialog using mcpRegInfoMap.
+    // When I click each contributorName, it will preview the mcpServers. And then I can approve or not.
   }
 
   private void loadMcpRegistrationData() {
@@ -123,7 +161,9 @@ public class McpConfigService extends ChatBaseService implements IMcpConfigServi
             if (provider instanceof IMcpRegistrationProvider) {
               IMcpRegistrationProvider mcpProvider = (IMcpRegistrationProvider) provider;
               String mcpServers = mcpProvider.getMcpServerConfigurations();
-              mcpRegDisplayInfo.put(contributorName, mcpServers);
+              boolean isTrusted = isMcpFromSignedBundle(contributorName);
+              boolean isApproved = false; // default value
+              mcpRegInfoMap.put(contributorName, new McpRegistrationInfo(isTrusted, isApproved, mcpServers));
             }
           } catch (Exception e) {
             CopilotCore.LOGGER.error("Failed to get display info for provider: " 
@@ -201,12 +241,6 @@ public class McpConfigService extends ChatBaseService implements IMcpConfigServi
 
   public Map<String, Object> getMcpRegServerMap() {
     return mcpRegServerMap;
-  }
-
-  private void confirmThirdPartyMcp() {
-    // Show a confirmation dialog.
-    // Record disabled mcp server names
-    // Merge all mcp servers for setting manager -> move to setMcpServers
   }
 
   private void initializeMcpToolUpdateEvent() {
