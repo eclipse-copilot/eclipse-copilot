@@ -59,7 +59,6 @@ public class WarnWidget extends Composite {
     Composite composite = new Composite(this, SWT.NONE);
     composite.setLayout(new GridLayout(2, false));
     composite.setLayoutData(new GridData(SWT.LEFT, SWT.NONE, true, false));
-    UiUtils.useParentBackground(composite);
 
     Label iconLabel = new Label(composite, SWT.TOP);
     warnImage = UiUtils.buildImageFromPngPath("/icons/message_warning.png");
@@ -68,7 +67,6 @@ public class WarnWidget extends Composite {
     iconGd.verticalIndent = 4;
     iconLabel.setLayoutData(iconGd);
     buttonLeftMargin = warnImage.getBounds().width + iconGd.verticalIndent;
-    UiUtils.useParentBackground(iconLabel);
     iconLabel.addDisposeListener(e -> {
       if (warnImage != null && !warnImage.isDisposed()) {
         warnImage.dispose();
@@ -79,7 +77,6 @@ public class WarnWidget extends Composite {
     StyledText styledText = textLabel.getTextWidget();
     styledText.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true));
     styledText.setEditable(false);
-    UiUtils.useParentBackground(styledText);
     textLabel.setMarkup(message);
 
     requestLayout();

@@ -38,12 +38,10 @@ public class AgentToolCancelLabel extends Composite {
     this.cancelIcon = UiUtils.buildImageFromPngPath("/icons/cancel_status.png");
     Label iconLabel = new Label(this, SWT.LEFT);
     iconLabel.setImage(this.cancelIcon);
-    UiUtils.useParentBackground(iconLabel);
 
     Label textLabel = new Label(this, SWT.LEFT | SWT.WRAP);
     textLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
     textLabel.setText(cancelMessage);
-    textLabel.setBackground(this.getParent().getBackground());
 
     this.addDisposeListener(e -> {
       if (this.cancelIcon != null && !this.cancelIcon.isDisposed()) {

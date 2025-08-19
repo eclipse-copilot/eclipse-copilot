@@ -97,8 +97,6 @@ public class AddContextButton extends Composite {
         attachImage.dispose();
       }
     });
-
-    UiUtils.useParentBackground(this);
   }
 
   @Override
