@@ -6,7 +6,7 @@ Eclipse Plug-in for Copilot is a plug-in that brings the power of [GitHub Copilo
 - An active [GitHub Copilot subscription](https://github.com/features/copilot).
 - (*Optional*) Node.js runtime 20.8 or later
 
-> Node.js is only required if your platform is **not** of the following:
+> Node.js is only required if your platform is **not** one of the following:
 > - darwin-arm64
 > - darwin-x64
 > - linux-arm64
@@ -14,7 +14,7 @@ Eclipse Plug-in for Copilot is a plug-in that brings the power of [GitHub Copilo
 > - win32-x64
 
 # FAQ
-If you meet any problem when using the extension, please refer to the [FAQ](https://github.com/eclipse-copilot/eclipse-copilot/wiki/Frequently-Asked-Questions) and our [discussion channel](https://github.com/eclipse-copilot/eclipse-copilot/discussions) to check if there is an answer to your problem.
+If you meet any problem when using the plug-in, please refer to the [FAQ](https://github.com/eclipse-copilot/eclipse-copilot/wiki/Frequently-Asked-Questions) and our [discussion channel](https://github.com/eclipse-copilot/eclipse-copilot/discussions) to check if there is an answer to your problem.
 
 # License
 
