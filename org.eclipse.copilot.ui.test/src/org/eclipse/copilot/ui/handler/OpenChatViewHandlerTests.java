@@ -18,6 +18,7 @@ import static org.mockito.Mockito.when;
 
 import org.eclipse.copilot.core.Constants;
 import org.eclipse.copilot.ui.CopilotUi;
+import org.eclipse.copilot.ui.UiConstants;
 import org.eclipse.copilot.ui.chat.ActionBar;
 import org.eclipse.copilot.ui.chat.ChatView;
 import org.eclipse.copilot.ui.chat.services.ChatServiceManager;
@@ -96,9 +97,9 @@ public class OpenChatViewHandlerTests {
       when(mockChatView.getActionBar()).thenReturn(mockActionBar);
       
       // Setup parameters
-      when(mockEvent.getParameter("org.eclipse.copilot.commands.openChatView.inputValue"))
+      when(mockEvent.getParameter(UiConstants.OPEN_CHAT_VIEW_INPUT_VALUE))
           .thenReturn("Test message");
-      when(mockEvent.getParameter("org.eclipse.copilot.commands.openChatView.autoSend"))
+      when(mockEvent.getParameter(UiConstants.OPEN_CHAT_VIEW_AUTO_SEND))
           .thenReturn("true");
 
       // Execute
@@ -128,9 +129,9 @@ public class OpenChatViewHandlerTests {
       when(mockChatView.getActionBar()).thenReturn(mockActionBar);
       
       // Setup parameters - no auto send
-      when(mockEvent.getParameter("org.eclipse.copilot.commands.openChatView.inputValue"))
+      when(mockEvent.getParameter(UiConstants.OPEN_CHAT_VIEW_INPUT_VALUE))
           .thenReturn("Test message");
-      when(mockEvent.getParameter("org.eclipse.copilot.commands.openChatView.autoSend"))
+      when(mockEvent.getParameter(UiConstants.OPEN_CHAT_VIEW_AUTO_SEND))
           .thenReturn("false");
 
       // Execute
@@ -160,7 +161,7 @@ public class OpenChatViewHandlerTests {
       when(mockChatView.getActionBar()).thenReturn(mockActionBar);
       
       // Setup parameters as null/empty
-      when(mockEvent.getParameter("org.eclipse.copilot.commands.openChatView.inputValue"))
+      when(mockEvent.getParameter(UiConstants.OPEN_CHAT_VIEW_INPUT_VALUE))
           .thenReturn(null);
 
       // Execute
@@ -231,7 +232,7 @@ public class OpenChatViewHandlerTests {
       when(mockChatView.getActionBar()).thenReturn(null);
       
       // Setup parameters
-      when(mockEvent.getParameter("org.eclipse.copilot.commands.openChatView.inputValue"))
+      when(mockEvent.getParameter(UiConstants.OPEN_CHAT_VIEW_INPUT_VALUE))
           .thenReturn("Test message");
 
       // Execute
@@ -261,9 +262,9 @@ public class OpenChatViewHandlerTests {
       when(mockChatView.getActionBar()).thenReturn(mockActionBar);
       
       // Setup parameters - no auto send
-      when(mockEvent.getParameter("org.eclipse.copilot.commands.openChatView.inputValue"))
+      when(mockEvent.getParameter(UiConstants.OPEN_CHAT_VIEW_INPUT_VALUE))
           .thenReturn("Test message");
-      when(mockEvent.getParameter("org.eclipse.copilot.commands.openChatView.autoSend"))
+      when(mockEvent.getParameter(UiConstants.OPEN_CHAT_VIEW_AUTO_SEND))
           .thenReturn("true");
 
       // Execute

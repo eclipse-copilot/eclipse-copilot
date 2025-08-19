@@ -21,6 +21,7 @@ import org.eclipse.copilot.core.Constants;
 import org.eclipse.copilot.core.CopilotCore;
 import org.eclipse.copilot.core.lsp.protocol.ChatMode;
 import org.eclipse.copilot.ui.CopilotUi;
+import org.eclipse.copilot.ui.UiConstants;
 import org.eclipse.copilot.ui.chat.ActionBar;
 import org.eclipse.copilot.ui.chat.ChatView;
 
@@ -53,8 +54,8 @@ public class OpenChatViewHandler extends CopilotHandler {
           }
         } catch (PartInitException e) {
           CopilotCore.LOGGER.error("Failed to open chat view", e);
-          return null;
         }
+        return null;
       }
     }
 
@@ -70,13 +71,13 @@ public class OpenChatViewHandler extends CopilotHandler {
   private void setUpParameters(ExecutionEvent event, ChatView chatView) {
     CopilotUi.getPlugin().getChatServiceManager().getUserPreferenceService().setActiveChatMode(ChatMode.Ask.toString());
 
-    String inputValue = event.getParameter("org.eclipse.copilot.commands.openChatView.inputValue");
+    String inputValue = event.getParameter(UiConstants.OPEN_CHAT_VIEW_INPUT_VALUE);
     ActionBar actionBar = chatView.getActionBar();
     if (StringUtils.isNotBlank(inputValue) && actionBar != null) {
       actionBar.setInputTextViewerContent(inputValue);
 
-      String autoSend = event.getParameter("org.eclipse.copilot.commands.openChatView.autoSend");
-      if (StringUtils.isNotBlank(autoSend) && Boolean.parseBoolean(autoSend) && actionBar != null) {
+      String autoSend = event.getParameter(UiConstants.OPEN_CHAT_VIEW_AUTO_SEND);
+      if (StringUtils.isNotBlank(autoSend) && Boolean.parseBoolean(autoSend)) {
         actionBar.handleSendMessage();
       }
     }
