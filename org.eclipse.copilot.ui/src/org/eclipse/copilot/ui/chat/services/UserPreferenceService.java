@@ -295,7 +295,7 @@ public class UserPreferenceService extends ChatBaseService implements CopilotAut
   }
 
   /**
-   * Set the active chat mode.
+   * Set the active chat mode by index.
    *
    * @param index the index of the chat mode to set
    */
@@ -311,7 +311,12 @@ public class UserPreferenceService extends ChatBaseService implements CopilotAut
     setActiveChatMode(chatModeName);
   }
 
-  private void setActiveChatMode(String chatModeName) {
+  /**
+   * Set the active chat mode by name.
+   *
+   * @param chatModeName the name of the chat mode to set
+   */
+  public void setActiveChatMode(String chatModeName) {
     if (StringUtils.isBlank(chatModeName)) {
       return;
     }

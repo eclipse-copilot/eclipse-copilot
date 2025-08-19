@@ -11,6 +11,7 @@ package org.eclipse.copilot.ui.handlers;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -424,13 +425,20 @@ public class ShowStatusBarMenuHandler extends CopilotHandler implements IElement
         @Override
         public void run() {
           try {
-            if (parameters != null && !parameters.isEmpty()) {
-              ICommandService commandService = PlatformUI.getWorkbench().getService(ICommandService.class);
-              Command command = commandService.getCommand(commandId);
-              ParameterizedCommand parameterizedCommand = ParameterizedCommand.generateCommand(command, parameters);
-              handlerService.executeCommand(parameterizedCommand, null);
+            if (commandId.equals("org.eclipse.copilot.commands.openChatView")) {
+              Map<String, Object> params = new HashMap<>();
+              params.put("org.eclipse.copilot.commands.openChatView.inputValue", "Hi");
+              params.put("org.eclipse.copilot.commands.openChatView.autoSend", "true");
+              UiUtils.executeCommandWithParameters(commandId, params);
             } else {
-              handlerService.executeCommand(commandId, null);
+              if (parameters != null && !parameters.isEmpty()) {
+                ICommandService commandService = PlatformUI.getWorkbench().getService(ICommandService.class);
+                Command command = commandService.getCommand(commandId);
+                ParameterizedCommand parameterizedCommand = ParameterizedCommand.generateCommand(command, parameters);
+                handlerService.executeCommand(parameterizedCommand, null);
+              } else {
+                handlerService.executeCommand(commandId, null);
+              }
             }
           } catch (Exception e) {
             CopilotCore.LOGGER.error(e);

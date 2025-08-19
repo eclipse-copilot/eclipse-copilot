@@ -182,7 +182,6 @@ public class ChatView extends ViewPart implements ChatProgressListener, MessageL
     if (chatMode == null) {
       return;
     }
-    this.onCancel();
 
     if (!hasHistory) {
       createChatPage(chatMode);
@@ -597,7 +596,7 @@ public class ChatView extends ViewPart implements ChatProgressListener, MessageL
     return this.contentWrapper;
   }
 
-  public Composite getActionBar() {
+  public ActionBar getActionBar() {
     return this.actionBar;
   }
 
