@@ -5,7 +5,7 @@ Thank you for your interest in contributing to Eclipse plug-in for Copilot!
 There are many ways in which you can contribute, beyond writing code. Please read the following document to check how you can get involved.
 
 ## Questions and Feedback
-Have questions or feedback? Feel free to let us know! You can share your thoughts in Discussion channel: [Discussion](https://github.com/eclipse-copilot/eclipse-copilot/discussions)
+Have questions or feedback? Feel free to let us know! You can share your thoughts in the Discussion channel: [Discussion](https://github.com/eclipse-copilot/eclipse-copilot/discussions)
 
 ## Reporting Issues
 You can report issues whenever:
@@ -35,7 +35,7 @@ If you are interested in writing code to fix issues, please check the following 
 ### Overview
 The plug-in has two major modules:
 - Copilot Core - The core part of the plug-in, including the Copilot Language Server, which enables Eclipse to integrate with GitHub Copilot via the language server protocol.
-- Copilot UI - UI logic mostly
+- Copilot UI - Handles all user interface components and interactions, including displaying Copilot suggestions, providing Chat view with ask and agnet mode and integrating Copilot features into the Eclipse IDE's UI.
 
 ### Setup
 1. Fork and clone the repository: `git clone https://github.com/eclipse-copilot/eclipse-copilot.git`

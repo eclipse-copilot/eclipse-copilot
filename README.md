@@ -14,7 +14,7 @@ Eclipse Plug-in for Copilot is a plug-in that brings the power of [GitHub Copilo
 > - win32-x64
 
 # FAQ
-If you meet any problem when using the plug-in, please refer to the [FAQ](https://github.com/eclipse-copilot/eclipse-copilot/wiki/Frequently-Asked-Questions) and our [discussion channel](https://github.com/eclipse-copilot/eclipse-copilot/discussions) to check if there is an answer to your problem.
+If you encounter any problems when using the plug-in, please refer to the [FAQ](https://github.com/eclipse-copilot/eclipse-copilot/wiki/Frequently-Asked-Questions) and our [discussion channel](https://github.com/eclipse-copilot/eclipse-copilot/discussions) to check if there is an answer to your problem.
 
 # License
 
