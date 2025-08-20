@@ -34,6 +34,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jgit.ignore.FastIgnoreRule;
 import org.eclipse.jgit.ignore.IgnoreNode;
 import org.eclipse.jgit.util.StringUtils;
+import org.eclipse.lsp4e.LSPEclipseUtils;
 import org.eclipse.lsp4j.FileChangeType;
 import org.eclipse.lsp4j.FileEvent;
 
@@ -81,10 +82,15 @@ class WatchedFileManager {
    * Get the list of watched files.
    */
   public synchronized List<String> getWatchedFiles(GetWatchedFilesRequest params) {
-    if (files != null) {
-      return new ArrayList<>(files);
-    }
+    CopilotCore.LOGGER.info("Get watched files for project: " + params.getWorkspaceUri());
+
+//    if (files != null) {
+//      return new ArrayList<>(files);
+//    }
     files = new LinkedHashSet<>();
+
+    String projectUri = params.getWorkspaceUri();
+    // TODO: generate the project from the projectUri
 
     IProject[] projects = ResourcesPlugin.getPlugin().getWorkspace().getRoot().getProjects();
 
@@ -92,7 +98,7 @@ class WatchedFileManager {
     if (params.isExcludeGitignoredFiles()) {
       List<IFile> gitignoreFiles = new ArrayList<>();
       for (IProject project : projects) {
-        if (!project.isAccessible()) {
+        if (!project.isAccessible() || !LSPEclipseUtils.toUri((IResource) project).toASCIIString().equals(projectUri)) {
           continue;
         }
         gitignoreFiles.addAll(findGitignoreFiles(project));
@@ -108,7 +114,7 @@ class WatchedFileManager {
 
     // collect watched files
     for (IProject project : projects) {
-      if (!project.isAccessible()) {
+      if (!project.isAccessible() || !LSPEclipseUtils.toUri((IResource) project).toASCIIString().equals(projectUri)) {
         continue;
       }
 
