@@ -1,15 +1,10 @@
 /*******************************************************************************
- * Copyright (c) 2025 Microsoft Corporation and others.
+ * Copyright (c) 2025 GitHub, Inc. and others
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
  * https://www.eclipse.org/legal/epl-2.0/
- *
- * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *     Microsoft Corporation - initial API and implementation
  *******************************************************************************/
 
 package org.eclipse.copilot.ui.chat.viewers;
@@ -59,7 +54,6 @@ public abstract class BaseViewer extends Composite {
     Label label = new Label(composite, SWT.LEFT);
     label.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true));
     label.setText(text);
-    label.setForeground((parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY)));
   }
 
   /**
@@ -90,7 +84,6 @@ public abstract class BaseViewer extends Composite {
   protected void buildTextWithLinkAndListener(Composite parent, String text, GridData gridData, Listener listener) {
     Link link = new Link(parent, SWT.CENTER);
     link.setText(text);
-    link.setForeground(this.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
     link.setLayoutData(gridData != null ? gridData : new GridData(SWT.CENTER, SWT.CENTER, true, false));
     link.addListener(SWT.Selection, listener);
   }

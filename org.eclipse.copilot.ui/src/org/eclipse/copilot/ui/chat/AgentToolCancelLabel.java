@@ -1,15 +1,10 @@
 /*******************************************************************************
- * Copyright (c) 2025 Microsoft Corporation and others.
+ * Copyright (c) 2025 GitHub, Inc. and others
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
  * https://www.eclipse.org/legal/epl-2.0/
- *
- * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *     Microsoft Corporation - initial API and implementation
  *******************************************************************************/
 
 package org.eclipse.copilot.ui.chat;
@@ -43,12 +38,10 @@ public class AgentToolCancelLabel extends Composite {
     this.cancelIcon = UiUtils.buildImageFromPngPath("/icons/cancel_status.png");
     Label iconLabel = new Label(this, SWT.LEFT);
     iconLabel.setImage(this.cancelIcon);
-    UiUtils.useParentBackground(iconLabel);
 
     Label textLabel = new Label(this, SWT.LEFT | SWT.WRAP);
     textLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
     textLabel.setText(cancelMessage);
-    textLabel.setBackground(this.getParent().getBackground());
 
     this.addDisposeListener(e -> {
       if (this.cancelIcon != null && !this.cancelIcon.isDisposed()) {

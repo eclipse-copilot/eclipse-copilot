@@ -1,15 +1,10 @@
 /*******************************************************************************
- * Copyright (c) 2025 Microsoft Corporation and others.
+ * Copyright (c) 2025 GitHub, Inc. and others
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
  * https://www.eclipse.org/legal/epl-2.0/
- *
- * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *     Microsoft Corporation - initial API and implementation
  *******************************************************************************/
 
 package org.eclipse.copilot.ui.chat;
@@ -62,11 +57,6 @@ public class ChatInputTextViewer extends TextViewer implements PaintListener {
   private boolean caretLineOffsetChanged = false;
   private int lastCursorLineOffset = 0;
 
-  /**
-   * Whether the color resource should be disposed. When the color is fetched from the jface registry, it should not be
-   * disposed.
-   */
-  private boolean needDisposeColorResource;
   private Color placeholderColor;
 
   /**
@@ -116,7 +106,6 @@ public class ChatInputTextViewer extends TextViewer implements PaintListener {
     this.addTextListener(this::onTextChanged);
 
     StyledText tvw = this.getTextWidget();
-    tvw.setBackground(tvw.getParent().getBackground());
     tvw.setLayout(new GridLayout(1, false));
     tvw.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
     tvw.setAlwaysShowScrollBars(false);
@@ -152,13 +141,11 @@ public class ChatInputTextViewer extends TextViewer implements PaintListener {
   }
 
   private void initializePlaceHolderColor() {
-    Color color = SwtUtils.getRegisteredInlineAnnotationColor(this.getTextWidget().getDisplay());
-    if (color == null) {
-      needDisposeColorResource = true;
-      placeholderColor = SwtUtils.getDefaultGhostTextColor(this.getTextWidget().getDisplay());
+    boolean isDarkTheme = UiUtils.isDarkTheme();
+    if (isDarkTheme) {
+      placeholderColor = new Color(parent.getDisplay(), 164, 164, 164);
     } else {
-      needDisposeColorResource = false;
-      placeholderColor = color;
+      placeholderColor = new Color(parent.getDisplay(), 128, 128, 128);
     }
   }
 
@@ -346,15 +333,6 @@ public class ChatInputTextViewer extends TextViewer implements PaintListener {
   private void resetCaretLineOffsetStatus() {
     lastCursorLineOffset = 0;
     caretLineOffsetChanged = false;
-  }
-
-  /**
-   * Disposes the resources used by this viewer, including the placeholder color if it was created.
-   */
-  public void dispose() {
-    if (needDisposeColorResource && placeholderColor != null && !placeholderColor.isDisposed()) {
-      placeholderColor.dispose();
-    }
   }
 
   public void setContentAssistProcessor(ContentAssistant ca) {

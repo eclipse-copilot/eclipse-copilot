@@ -1,15 +1,10 @@
 /*******************************************************************************
- * Copyright (c) 2025 Microsoft Corporation and others.
+ * Copyright (c) 2025 GitHub, Inc. and others
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
  * https://www.eclipse.org/legal/epl-2.0/
- *
- * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *     Microsoft Corporation - initial API and implementation
  *******************************************************************************/
 
 package org.eclipse.copilot.ui.chat;
@@ -64,7 +59,6 @@ public class WarnWidget extends Composite {
     Composite composite = new Composite(this, SWT.NONE);
     composite.setLayout(new GridLayout(2, false));
     composite.setLayoutData(new GridData(SWT.LEFT, SWT.NONE, true, false));
-    UiUtils.useParentBackground(composite);
 
     Label iconLabel = new Label(composite, SWT.TOP);
     warnImage = UiUtils.buildImageFromPngPath("/icons/message_warning.png");
@@ -73,7 +67,6 @@ public class WarnWidget extends Composite {
     iconGd.verticalIndent = 4;
     iconLabel.setLayoutData(iconGd);
     buttonLeftMargin = warnImage.getBounds().width + iconGd.verticalIndent;
-    UiUtils.useParentBackground(iconLabel);
     iconLabel.addDisposeListener(e -> {
       if (warnImage != null && !warnImage.isDisposed()) {
         warnImage.dispose();
@@ -84,7 +77,6 @@ public class WarnWidget extends Composite {
     StyledText styledText = textLabel.getTextWidget();
     styledText.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true));
     styledText.setEditable(false);
-    UiUtils.useParentBackground(styledText);
     textLabel.setMarkup(message);
 
     requestLayout();

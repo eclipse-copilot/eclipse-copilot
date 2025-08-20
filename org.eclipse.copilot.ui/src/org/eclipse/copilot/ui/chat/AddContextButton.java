@@ -1,15 +1,10 @@
 /*******************************************************************************
- * Copyright (c) 2025 Microsoft Corporation and others.
+ * Copyright (c) 2025 GitHub, Inc. and others
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
  * https://www.eclipse.org/legal/epl-2.0/
- *
- * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *     Microsoft Corporation - initial API and implementation
  *******************************************************************************/
 
 package org.eclipse.copilot.ui.chat;
@@ -70,12 +65,10 @@ public class AddContextButton extends Composite {
         attachImage.dispose();
       }
     });
-    UiUtils.useParentBackground(this.lblAttachIcon);
 
     lblButtonText = new Label(this, SWT.NONE);
     lblButtonText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
     lblButtonText.setText("Add Context...");
-    UiUtils.useParentBackground(this.lblButtonText);
 
     MouseAdapter clickListener = new MouseAdapter() {
       @Override
@@ -91,7 +84,6 @@ public class AddContextButton extends Composite {
     lblButtonText.addMouseListener(clickListener);
     this.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_HAND));
 
-    UiUtils.useParentBackground(this);
   }
 
   /**

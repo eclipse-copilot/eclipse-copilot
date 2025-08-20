@@ -1,15 +1,10 @@
 /*******************************************************************************
- * Copyright (c) 2025 Microsoft Corporation and others.
+ * Copyright (c) 2025 GitHub, Inc. and others
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
  * https://www.eclipse.org/legal/epl-2.0/
- *
- * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *     Microsoft Corporation - initial API and implementation
  *******************************************************************************/
 
 package org.eclipse.copilot.ui;
@@ -19,11 +14,8 @@ package org.eclipse.copilot.ui;
  */
 public class UiConstants {
 
-  public static final String HOVER_BACKGROUND = "org.eclipse.ui.workbench.HOVER_BACKGROUND";
-  public static final String EDITOR_BACKGROUND = "org.eclipse.ui.editors.backgroundColor";
   public static final String WORKBENCH_TEXTEDITOR = "org.eclipse.ui.workbench.texteditor";
   public static final String INSERT_ICON = "icons/full/elcl16/insert_template.png";
-  public static final String USE_PARENT_BACKGROUND = "useParentBackground";
 
   private UiConstants() {
     // prevent instantiation

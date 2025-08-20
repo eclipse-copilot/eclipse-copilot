@@ -1,15 +1,10 @@
 /*******************************************************************************
- * Copyright (c) 2025 Microsoft Corporation and others.
+ * Copyright (c) 2025 GitHub, Inc. and others
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
  * https://www.eclipse.org/legal/epl-2.0/
- *
- * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *     Microsoft Corporation - initial API and implementation
  *******************************************************************************/
 
 package org.eclipse.copilot.ui.chat;
@@ -60,7 +55,6 @@ public class UserTurnWidget extends BaseTurnWidget {
   @Override
   protected Label createAvatarLabel(Composite parent) {
     Label lblAvatar = new Label(parent, SWT.DOUBLE_BUFFERED);
-    lblAvatar.setBackground(parent.getBackground());
 
     // Set size based on icon dimensions
     int size = icon.getBounds().width;
@@ -83,8 +77,6 @@ public class UserTurnWidget extends BaseTurnWidget {
 
         Rectangle bounds = e.gc.getClipping();
 
-        // Clear previous content with background color
-        gc.setBackground(lblAvatar.getBackground());
         gc.fillRectangle(bounds);
 
         // Create circular clipping path for the image
@@ -122,6 +114,5 @@ public class UserTurnWidget extends BaseTurnWidget {
     StyledText styledText = this.currentTextBlock.getTextWidget();
     styledText.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false));
     styledText.setEditable(false);
-    styledText.setBackground(this.getBackground());
   }
 }

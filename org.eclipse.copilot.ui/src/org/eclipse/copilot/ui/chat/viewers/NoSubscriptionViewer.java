@@ -1,15 +1,10 @@
 /*******************************************************************************
- * Copyright (c) 2025 Microsoft Corporation and others.
+ * Copyright (c) 2025 GitHub, Inc. and others
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
  * https://www.eclipse.org/legal/epl-2.0/
- *
- * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *     Microsoft Corporation - initial API and implementation
  *******************************************************************************/
 
 package org.eclipse.copilot.ui.chat.viewers;
@@ -67,7 +62,6 @@ public class NoSubscriptionViewer extends BaseViewer {
 
     WrapLabel label = new WrapLabel(iconLabelComposite, SWT.CENTER);
     label.setText(Messages.chat_noAuthView_title);
-    label.setForeground(this.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
     FontData fontData = new FontData();
     fontData.setHeight(ALIGNED_TITLE_HEIGHT);
     fontData.setStyle(SWT.BOLD);
@@ -79,7 +73,6 @@ public class NoSubscriptionViewer extends BaseViewer {
 
     WrapLabel subLabel = new WrapLabel(iconLabelComposite, SWT.CENTER);
     subLabel.setText(Messages.chat_noAuthView_description);
-    subLabel.setForeground(this.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
   }
 
   private void buildcheckSubButton() {

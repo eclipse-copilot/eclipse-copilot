@@ -1,15 +1,10 @@
 /*******************************************************************************
- * Copyright (c) 2025 Microsoft Corporation and others.
+ * Copyright (c) 2025 GitHub, Inc. and others
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
  * https://www.eclipse.org/legal/epl-2.0/
- *
- * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *     Microsoft Corporation - initial API and implementation
  *******************************************************************************/
 
 package org.eclipse.copilot.ui.chat.viewers;
@@ -29,6 +24,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.IHandlerService;
 
+import org.eclipse.copilot.core.CopilotCore;
 import org.eclipse.copilot.ui.i18n.Messages;
 import org.eclipse.copilot.ui.swt.WrapLabel;
 import org.eclipse.copilot.ui.utils.UiUtils;
@@ -129,7 +125,6 @@ public class BeforeLoginWelcomeViewer extends BaseViewer {
 
     WrapLabel label = new WrapLabel(iconLabelComposite, SWT.CENTER);
     label.setText(Messages.chat_welcomeView_title);
-    label.setForeground(this.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
     FontData fontData = new FontData();
     fontData.setHeight(ALIGNED_TITLE_HEIGHT);
     fontData.setStyle(SWT.BOLD);
@@ -141,7 +136,6 @@ public class BeforeLoginWelcomeViewer extends BaseViewer {
 
     this.welcomeSubLabel = new WrapLabel(iconLabelComposite, SWT.CENTER);
     this.welcomeSubLabel.setText(Messages.chat_welcomeView_description);
-    this.welcomeSubLabel.setForeground(this.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
   }
 
   private void buildSubComposite(Composite parent) {
@@ -206,7 +200,7 @@ public class BeforeLoginWelcomeViewer extends BaseViewer {
         try {
           handlerService.executeCommand("org.eclipse.copilot.commands.signIn", null);
         } catch (Exception e) {
-          e.printStackTrace();
+          CopilotCore.LOGGER.error("Error executing sign-in command", e);
         }
       }
     });

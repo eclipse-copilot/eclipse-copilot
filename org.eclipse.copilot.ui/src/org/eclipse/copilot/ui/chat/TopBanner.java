@@ -1,15 +1,10 @@
 /*******************************************************************************
- * Copyright (c) 2025 Microsoft Corporation and others.
+ * Copyright (c) 2025 GitHub, Inc. and others
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
  * https://www.eclipse.org/legal/epl-2.0/
- *
- * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *     Microsoft Corporation - initial API and implementation
  *******************************************************************************/
 
 package org.eclipse.copilot.ui.chat;
@@ -42,6 +37,7 @@ import org.eclipse.copilot.ui.CopilotUi;
 import org.eclipse.copilot.ui.chat.tools.FileToolService;
 import org.eclipse.copilot.ui.handlers.OpenPreferencesHandler;
 import org.eclipse.copilot.ui.i18n.Messages;
+import org.eclipse.copilot.ui.swt.CssConstants;
 import org.eclipse.copilot.ui.utils.SwtUtils;
 import org.eclipse.copilot.ui.utils.UiUtils;
 
@@ -73,10 +69,10 @@ public class TopBanner extends Composite {
     GridData layoutData = new GridData(SWT.FILL, SWT.TOP, true, false);
     layoutData.minimumHeight = 40;
     setLayoutData(layoutData);
+    setData(CssConstants.CSS_ID_KEY, "chat-top-banner");
 
     this.chatTitle = new CLabel(this, SWT.NONE);
     this.chatTitle.setText(Messages.chat_topBanner_defaultChatTitle);
-    this.chatTitle.setForeground(getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
 
     GridData labelGridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
     labelGridData.horizontalIndent = 10;
@@ -128,7 +124,8 @@ public class TopBanner extends Composite {
       public void paintControl(PaintEvent e) {
         GC gc = e.gc;
         int borderWidth = 1;
-        Color borderColor = getDisplay().getSystemColor(SWT.COLOR_GRAY);
+        Color borderColor = UiUtils.isDarkTheme() ? new Color(getDisplay(), 100, 100, 100)
+            : new Color(getDisplay(), 216, 216, 216);
         gc.setForeground(borderColor);
         gc.setLineWidth(borderWidth);
         Rectangle bounds = parent.getClientArea();

@@ -1,15 +1,10 @@
 /*******************************************************************************
- * Copyright (c) 2025 Microsoft Corporation and others.
+ * Copyright (c) 2025 GitHub, Inc. and others
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
  * https://www.eclipse.org/legal/epl-2.0/
- *
- * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *     Microsoft Corporation - initial API and implementation
  *******************************************************************************/
 
 package org.eclipse.copilot.ui.chat;
@@ -27,6 +22,7 @@ import org.eclipse.ui.PlatformUI;
 import org.osgi.service.event.EventHandler;
 
 import org.eclipse.copilot.core.events.CopilotEventConstants;
+import org.eclipse.copilot.ui.swt.CssConstants;
 import org.eclipse.copilot.ui.utils.UiUtils;
 
 /**
@@ -34,7 +30,7 @@ import org.eclipse.copilot.ui.utils.UiUtils;
  */
 public class AgentStatusLabel extends Composite {
   private static final int TOTAL_FRAMES = 8; // Adjust based on actual number of spinner images
-  
+
   private Image runningIcon;
   private Image completedIcon;
   private Image cancelledIcon;
@@ -76,7 +72,6 @@ public class AgentStatusLabel extends Composite {
       }
     });
     iconLabel = new Label(this, SWT.LEFT);
-    UiUtils.useParentBackground(iconLabel);
 
     this.status = Status.RUNNING;
     this.cancelStatusHandler = new EventHandler() {
@@ -199,8 +194,7 @@ public class AgentStatusLabel extends Composite {
       StyledText styledText = textLabel.getTextWidget();
       styledText.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true));
       styledText.setEditable(false);
-      styledText.setBackground(this.getBackground());
-      styledText.setForeground(this.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+      styledText.setData(CssConstants.CSS_CLASS_NAME_KEY, "text-secondary");
     }
     textLabel.setMarkup(text);
   }

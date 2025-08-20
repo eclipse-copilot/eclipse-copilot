@@ -1,15 +1,10 @@
 /*******************************************************************************
- * Copyright (c) 2025 Microsoft Corporation and others.
+ * Copyright (c) 2025 GitHub, Inc. and others
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
  * https://www.eclipse.org/legal/epl-2.0/
- *
- * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *     Microsoft Corporation - initial API and implementation
  *******************************************************************************/
 
 package org.eclipse.copilot.ui.chat;
@@ -94,28 +89,6 @@ class ChatViewTest {
     } catch (Exception e) {
       throw new RuntimeException("Failed to set field " + fieldName, e);
     }
-  }
-
-  @Test
-  void testSwitchChatModeWithCachedInputContent() {
-    String cachedInputContent = "Cached input content";
-
-    // Build the view for Agent mode and set cached content to the input viewer
-    when(mockUserPreferenceService.getActiveChatMode()).thenReturn(ChatMode.Agent);
-    when(mockChatServiceManager.getMcpConfigService()).thenReturn(mockMcpConfigService);
-    SwtUtils.invokeOnDisplayThread(() -> {
-      chatView.buildViewFor(ChatMode.Agent);
-    });
-    ActionBar agentActionBar = (ActionBar) chatView.getActionBar();
-    agentActionBar.setInputTextViewerContent(cachedInputContent);
-
-    // Switch to Ask mode and verify the cached content is retained
-    when(mockUserPreferenceService.getActiveChatMode()).thenReturn(ChatMode.Ask);
-    SwtUtils.invokeOnDisplayThread(() -> {
-      chatView.buildViewFor(ChatMode.Ask);
-    });
-    ActionBar askActionBar = (ActionBar) chatView.getActionBar();
-    assertEquals(cachedInputContent, askActionBar.getInputTextViewerContent());
   }
 
   @AfterEach
