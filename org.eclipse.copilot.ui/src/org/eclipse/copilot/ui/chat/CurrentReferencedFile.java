@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.copilot.ui.CopilotUi;
 import org.eclipse.copilot.ui.chat.services.ReferencedFileService;
 import org.eclipse.copilot.ui.i18n.Messages;
+import org.eclipse.copilot.ui.swt.CssConstants;
 import org.eclipse.copilot.ui.utils.UiUtils;
 
 /**
@@ -39,7 +40,7 @@ public class CurrentReferencedFile extends ReferencedFile {
    * Creates a new CurrentReferencedFile.
    */
   public CurrentReferencedFile(Composite parent) {
-    //No need to get supportVision here, as currentFile will not be an image file.
+    // No need to get supportVision here, as currentFile will not be an image file.
     super(parent, null, false);
 
     // change to 4 col layout
@@ -50,10 +51,9 @@ public class CurrentReferencedFile extends ReferencedFile {
 
     descriptionLabel = new Label(this, SWT.NONE);
     descriptionLabel.setText(Messages.chat_currentReferencedFile_description);
-    descriptionLabel.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND));
     descriptionLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
     descriptionLabel.moveAbove(lblClose);
-    UiUtils.useParentBackground(descriptionLabel);
+    descriptionLabel.setData(CssConstants.CSS_CLASS_NAME_KEY, "text-secondary");
   }
 
   /**
