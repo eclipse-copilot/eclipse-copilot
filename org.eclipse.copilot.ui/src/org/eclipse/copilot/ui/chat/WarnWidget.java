@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import org.eclipse.copilot.ui.i18n.Messages;
+import org.eclipse.copilot.ui.swt.CssConstants;
 import org.eclipse.copilot.ui.utils.UiUtils;
 
 /**
@@ -98,5 +99,6 @@ public class WarnWidget extends Composite {
         UiUtils.openLink(Messages.chat_noQuotaView_updatePlanLink);
       }
     });
+    updatePlanButton.setData(CssConstants.CSS_CLASS_NAME_KEY, "btn-primary");
   }
 }

@@ -16,6 +16,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
+import org.eclipse.copilot.ui.swt.CssConstants;
 import org.eclipse.copilot.ui.utils.UiUtils;
 
 /**
@@ -42,6 +43,7 @@ public class AgentToolCancelLabel extends Composite {
     Label textLabel = new Label(this, SWT.LEFT | SWT.WRAP);
     textLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
     textLabel.setText(cancelMessage);
+    textLabel.setData(CssConstants.CSS_CLASS_NAME_KEY, "text-secondary");
 
     this.addDisposeListener(e -> {
       if (this.cancelIcon != null && !this.cancelIcon.isDisposed()) {
