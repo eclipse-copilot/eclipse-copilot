@@ -26,6 +26,7 @@ import org.eclipse.ui.handlers.IHandlerService;
 
 import org.eclipse.copilot.core.CopilotCore;
 import org.eclipse.copilot.ui.i18n.Messages;
+import org.eclipse.copilot.ui.swt.CssConstants;
 import org.eclipse.copilot.ui.swt.WrapLabel;
 import org.eclipse.copilot.ui.utils.UiUtils;
 
@@ -193,10 +194,11 @@ public class BeforeLoginWelcomeViewer extends BaseViewer {
     GridData buttonGridData = new GridData(SWT.FILL, SWT.CENTER, true, true);
     buttonGridData.widthHint = 200;
     signInButton.setLayoutData(buttonGridData);
+    signInButton.setData(CssConstants.CSS_CLASS_NAME_KEY, "btn-primary");
     signInButton.addSelectionListener(new SelectionAdapter() {
       @Override
       public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) {
-        IHandlerService handlerService = (IHandlerService) PlatformUI.getWorkbench().getService(IHandlerService.class);
+        IHandlerService handlerService = PlatformUI.getWorkbench().getService(IHandlerService.class);
         try {
           handlerService.executeCommand("org.eclipse.copilot.commands.signIn", null);
         } catch (Exception e) {

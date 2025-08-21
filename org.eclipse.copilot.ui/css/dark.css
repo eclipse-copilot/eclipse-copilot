@@ -34,6 +34,11 @@
 	background-color: #1E1F22;
 }
 
+#chat-container > BeforeLoginWelcomeViewer .btn-primary {
+	color: #FFFFFF;
+	background-color: #3584F1;
+}
+
 #chat-container,
 #chat-container > LoadingViewer,
 #chat-container > LoadingViewer *,
@@ -62,11 +67,20 @@
 	background-color: #48484C; 
 }
 
+#chat-content-viewer .btn-primary {
+	color: #FFFFFF;
+	background-color: #3584F1;
+}
+
 #chat-content-viewer > Composite > CopilotTurnWidget > InvokeToolConfirmationDialog > .bg-command-panel {
 	background-color: #48484C;
 }
 
 #chat-content-viewer > Composite > CopilotTurnWidget > AgentStatusLabel > .text-secondary {
+	color: #A4A4A4;
+}
+
+#chat-content-viewer > Composite > CopilotTurnWidget > AgentToolCancelLabel > Label.text-secondary {
 	color: #A4A4A4;
 }
 
