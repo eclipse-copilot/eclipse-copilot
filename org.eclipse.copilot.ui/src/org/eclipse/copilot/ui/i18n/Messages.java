@@ -166,6 +166,8 @@ public final class Messages extends NLS {
   public static String chat_noAuthView_checkSubLink;
   public static String chat_filePicker_title;
   public static String chat_filePicker_message;
+  public static String chat_addContextButton_title;
+  public static String chat_addContextButton_tooltip;
   public static String chat_noQuotaView_fallbackModel;
   public static String chat_noQuotaView_updatePlanButton;
   public static String chat_noQuotaView_updatePlanButton_Tooltip;
