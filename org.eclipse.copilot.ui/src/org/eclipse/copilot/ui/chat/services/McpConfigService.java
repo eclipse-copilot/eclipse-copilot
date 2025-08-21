@@ -73,7 +73,7 @@ public class McpConfigService extends ChatBaseService implements IMcpConfigServi
   private IEventBroker eventBroker;
 
   // MCP registration extension point
-  private static final String EXTENSION_POINT_ID = "com.microsoft.copilot.eclipse.ui.mcpRegistration";
+  private static final String EXTENSION_POINT_ID = "org.eclipse.copilot.ui.mcpRegistration";
   private static final String ELEMENT_PROVIDER = "provider";
   private static final String ATTRIBUTE_CLASS = "class";
   private List<String> mcpRegTrustedBundles = new ArrayList<>();
@@ -136,8 +136,27 @@ public class McpConfigService extends ChatBaseService implements IMcpConfigServi
   }
 
   private void confirmThirdPartyMcp() {
-    // TODO: Show an approval dialog using mcpRegInfoMap.
-    // When I click each contributorName, it will preview the mcpServers. And then I can approve or not.
+    if (mcpRegInfoMap.isEmpty()) {
+      return;
+    }
+
+    ensureRealm(() -> {
+      Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+      McpApprovalDialog dialog = new McpApprovalDialog(shell, mcpRegInfoMap);
+      if (dialog.open() == MessageDialog.OK) {
+        // Update the disabled server list based on approval status
+        mcpRegDisabledServerList.clear();
+        for (Map.Entry<String, McpRegistrationInfo> entry : mcpRegInfoMap.entrySet()) {
+          String contributorName = entry.getKey();
+          McpRegistrationInfo info = entry.getValue();
+          
+          // If not approved, add to disabled server list
+          if (!info.isApproved()) {
+            mcpRegDisabledServerList.add(contributorName);
+          }
+        }
+      }
+    });
   }
 
   private void loadMcpRegistrationData() {
