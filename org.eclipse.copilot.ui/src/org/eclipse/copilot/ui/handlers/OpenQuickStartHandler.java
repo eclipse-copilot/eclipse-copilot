@@ -17,7 +17,6 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
@@ -57,8 +56,6 @@ public class OpenQuickStartHandler extends AbstractHandler {
    * Custom dialog for the Quick Start window.
    */
   private class QuickStartDialog extends Dialog {
-    private Color normalBackgroundColor;
-
     public QuickStartDialog(Shell parentShell) {
       super(parentShell);
       setShellStyle(SWT.RESIZE | SWT.APPLICATION_MODAL | SWT.NO_TRIM | SWT.ON_TOP);
@@ -127,7 +124,7 @@ public class OpenQuickStartHandler extends AbstractHandler {
             IHandlerService handlerService = (IHandlerService) PlatformUI.getWorkbench()
                 .getService(IHandlerService.class);
             try {
-              handlerService.executeCommand(UiConstants.OPEN_QUICK_START_COMMAND_ID, null);
+              handlerService.executeCommand(UiConstants.OPEN_CHAT_VIEW_COMMAND_ID, null);
             } catch (Exception ex) {
               CopilotCore.LOGGER.error("Failed to open chat view", ex);
             }
