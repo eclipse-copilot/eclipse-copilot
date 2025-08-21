@@ -568,17 +568,6 @@
 				relative="com.microsoft.copilot.eclipse.ui.chat.ChatView">
 			</view>
 		</perspectiveExtension>
-		<!-- Database Debug -->
-		<perspectiveExtension
-			targetID="org.eclipse.datatools.sqltools.debugger.perspectives.DebuggerPerspective">
-			<view
-				id="com.microsoft.copilot.eclipse.ui.chat.ChatView"
-				minimized="false"
-				ratio="0.75"
-				relationship="right"
-				relative="org.eclipse.ui.editorss">
-			</view>
-		</perspectiveExtension>
 		<!-- Database Development -->
 		<perspectiveExtension
 			targetID="org.eclipse.datatools.sqltools.sqleditor.perspectives.EditorPerspective">
