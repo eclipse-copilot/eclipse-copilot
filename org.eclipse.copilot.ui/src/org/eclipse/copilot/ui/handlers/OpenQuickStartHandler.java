@@ -17,13 +17,14 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
@@ -32,6 +33,7 @@ import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.intro.IIntroPart;
 
 import org.eclipse.copilot.core.CopilotCore;
+import org.eclipse.copilot.ui.UiConstants;
 import org.eclipse.copilot.ui.i18n.Messages;
 import org.eclipse.copilot.ui.quickstart.FeaturePage;
 
@@ -54,11 +56,9 @@ public class OpenQuickStartHandler extends AbstractHandler {
    * Custom dialog for the Quick Start window.
    */
   private class QuickStartDialog extends Dialog {
-    private Color normalBackgroundColor;
-
     public QuickStartDialog(Shell parentShell) {
       super(parentShell);
-      setShellStyle(SWT.RESIZE | SWT.APPLICATION_MODAL | SWT.NO_TRIM);
+      setShellStyle(SWT.RESIZE | SWT.APPLICATION_MODAL | SWT.NO_TRIM | SWT.ON_TOP);
     }
 
     @Override
@@ -110,7 +110,7 @@ public class OpenQuickStartHandler extends AbstractHandler {
         @Override
         public void mouseDown(MouseEvent e) {
           close();
-          
+
           IWorkbench workBench = PlatformUI.getWorkbench();
 
           // Close the Eclipse welcome view if it's open
@@ -118,19 +118,38 @@ public class OpenQuickStartHandler extends AbstractHandler {
           if (introPart != null) {
             workBench.getIntroManager().closeIntro(introPart);
           }
-          
+
           // Open the Copilot chat view
           workBench.getDisplay().asyncExec(() -> {
             IHandlerService handlerService = (IHandlerService) PlatformUI.getWorkbench()
                 .getService(IHandlerService.class);
             try {
-              handlerService.executeCommand("org.eclipse.copilot.commands.openChatView", null);
+              handlerService.executeCommand(UiConstants.OPEN_CHAT_VIEW_COMMAND_ID, null);
             } catch (Exception ex) {
               CopilotCore.LOGGER.error("Failed to open chat view", ex);
             }
           });
         }
       });
+    }
+
+    @Override
+    // Override the open method to center the dialog on the current monitor where the parent shell is located
+    public int open() {
+      int result = super.open();
+      Shell shell = getShell();
+      if (shell != null && shell.getParent() != null) {
+        Shell parentShell = (Shell) shell.getParent();
+        // Get the bounds of the monitor where the parent shell is located
+        Monitor monitor = parentShell.getMonitor();
+        Rectangle monitorBounds = monitor.getBounds();
+        Rectangle shellBounds = shell.getBounds();
+        // Center the dialog on the monitor
+        int x = monitorBounds.x + (monitorBounds.width - shellBounds.width) / 2;
+        int y = monitorBounds.y + (monitorBounds.height - shellBounds.height) / 2;
+        shell.setLocation(x, y);
+      }
+      return result;
     }
   }
 }
