@@ -20,14 +20,18 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.preferences.ConfigurationScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.osgi.service.prefs.BackingStoreException;
 
 import org.eclipse.copilot.core.AuthStatusManager;
 import org.eclipse.copilot.core.Constants;
 import org.eclipse.copilot.core.CopilotCore;
 import org.eclipse.copilot.core.lsp.protocol.CopilotStatusResult;
 import org.eclipse.copilot.core.lsp.protocol.SignInInitiateResult;
+import org.eclipse.copilot.ui.UiConstants;
 import org.eclipse.copilot.ui.dialogs.SignInConfirmDialog;
 import org.eclipse.copilot.ui.dialogs.SignInDialog;
 import org.eclipse.copilot.ui.i18n.Messages;
@@ -131,7 +135,13 @@ public class SignInHandler extends AbstractHandler {
         return;
       }
       if (status.isOK()) {
-        showSignInSuccessMessage(shell);
+        IEclipsePreferences configPrefs = ConfigurationScope.INSTANCE.getNode(Constants.PLUGIN_ID);
+        int storedQuickStartVersion = configPrefs.getInt(Constants.COPILOT_QUICK_START_VERSION, 0);
+        if (storedQuickStartVersion < Constants.CURRENT_COPILOT_QUICK_START_VERSION) {
+          showQuickStart();
+        } else {
+          showSignInSuccessMessage(shell);
+        }
       } else if (Objects.equals(CopilotStatusResult.ERROR, SignInHandler.this.authStatusManager.getCopilotStatus())) {
         // the CLS will show a dialog for not authorized case
         showSignInFailMessage(shell, status);
@@ -141,6 +151,19 @@ public class SignInHandler extends AbstractHandler {
     private void showSignInSuccessMessage(Shell shell) {
       MessageDialog.openInformation(shell, Messages.signInHandler_msgDialog_githubCopilot,
           Messages.signInHandler_msgDialog_signInSuccess);
+    }
+
+    private void showQuickStart() {
+      SwtUtils.invokeOnDisplayThreadAsync(
+          () -> UiUtils.executeCommandWithParameters(UiConstants.OPEN_QUICK_START_COMMAND_ID, null));
+
+      IEclipsePreferences configPrefs = ConfigurationScope.INSTANCE.getNode(Constants.PLUGIN_ID);
+      configPrefs.putInt(Constants.COPILOT_QUICK_START_VERSION, Constants.CURRENT_COPILOT_QUICK_START_VERSION);
+      try {
+        configPrefs.flush();
+      } catch (BackingStoreException e) {
+        CopilotCore.LOGGER.error("Failed to persist Quick Start version in ConfigurationScope", e);
+      }
     }
 
     private void showSignInFailMessage(Shell shell, IStatus status) {
