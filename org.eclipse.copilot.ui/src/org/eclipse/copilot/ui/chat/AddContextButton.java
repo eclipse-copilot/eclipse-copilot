@@ -24,13 +24,14 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.accessibility.AccessibleAdapter;
+import org.eclipse.swt.accessibility.AccessibleEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
@@ -43,47 +44,67 @@ import org.eclipse.copilot.ui.utils.UiUtils;
  * A widget that displays a button to attach context.
  */
 public class AddContextButton extends Composite {
-  private Label lblAttachIcon;
-  private Label lblButtonText;
+  private Button btnAttach;
 
   /**
    * Creates a new AddContextButton.
    */
   public AddContextButton(Composite parent) {
-    super(parent, SWT.BORDER);
-    GridLayout layout = new GridLayout(2, false);
-    layout.marginWidth = 4;
-    layout.marginHeight = 2;
+    super(parent, SWT.NONE);
+    GridLayout layout = new GridLayout(1, false);
+    layout.marginWidth = 0;
+    layout.marginHeight = 0;
     setLayout(layout);
 
-    lblAttachIcon = new Label(this, SWT.NONE);
-    lblAttachIcon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-    Image attachImage = UiUtils.buildImageFromPngPath("/icons/chat/attach_context.png");
-    lblAttachIcon.setImage(attachImage);
-    lblAttachIcon.addDisposeListener(e -> {
+    final Image attachImage = UiUtils.buildImageFromPngPath("/icons/chat/attach_context.png");
+
+    btnAttach = new Button(this, SWT.PUSH | SWT.FLAT);
+    btnAttach.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
+    btnAttach.setText(Messages.chat_addContextButton_title);
+    btnAttach.setToolTipText(Messages.chat_addContextButton_tooltip);
+    btnAttach.setImage(attachImage);
+    btnAttach.setAlignment(SWT.LEFT);
+    btnAttach.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_HAND));
+
+    // Ensure tab traversal within this composite goes to the main button
+    setTabList(new Control[] { btnAttach });
+
+    // Provide an accessible name/description for screen readers and accessibility tools
+    getAccessible().addAccessibleListener(new AccessibleAdapter() {
+      @Override
+      public void getName(AccessibleEvent e) {
+        if (e.result == null || e.result.isEmpty()) {
+          e.result = Messages.chat_filePicker_title;
+        }
+      }
+
+      @Override
+      public void getHelp(AccessibleEvent e) {
+        if (e.result == null || e.result.isEmpty()) {
+          e.result = Messages.chat_filePicker_message;
+        }
+      }
+    });
+
+    btnAttach.addListener(SWT.Selection, e -> {
+      List<IResource> files = selectFiles();
+      ReferencedFileService fileService = CopilotUi.getPlugin().getChatServiceManager().getReferencedFileService();
+      fileService.addReferencedFiles(files);
+    });
+
+    this.addDisposeListener(e -> {
       if (attachImage != null && !attachImage.isDisposed()) {
         attachImage.dispose();
       }
     });
+  }
 
-    lblButtonText = new Label(this, SWT.NONE);
-    lblButtonText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
-    lblButtonText.setText("Add Context...");
-
-    MouseAdapter clickListener = new MouseAdapter() {
-      @Override
-      public void mouseDown(MouseEvent e) {
-        List<IResource> files = selectFiles();
-        ReferencedFileService fileService = CopilotUi.getPlugin().getChatServiceManager().getReferencedFileService();
-        fileService.addReferencedFiles(files);
-      }
-    };
-    // Add mouse listener to 'this' so that clicking margin spaces will also trigger the action
-    this.addMouseListener(clickListener);
-    lblAttachIcon.addMouseListener(clickListener);
-    lblButtonText.addMouseListener(clickListener);
-    this.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_HAND));
-
+  @Override
+  public boolean setFocus() {
+    if (btnAttach != null && !btnAttach.isDisposed()) {
+      return btnAttach.setFocus();
+    }
+    return super.setFocus();
   }
 
   /**
