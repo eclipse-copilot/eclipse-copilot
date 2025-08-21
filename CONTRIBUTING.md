@@ -49,4 +49,7 @@ You can create a new `Eclipse Application` launch configuration for debugging pu
 The project uses Checkstyle to check for code format, Checkstyle rules can be found at `checkstyle.xml` at project root.
 
 ### Build
+
+The build requires the npm module installed [see setup](#setup).
+
 To build the plugin, run `./mvnw clean package`. The zip file can be found at `org.eclipse.copilot.repository/target/org.eclipse.copilot.repository-*.zip`
