@@ -119,6 +119,7 @@ public class InvokeToolConfirmationDialog extends Composite {
         parent.layout();
       }
     });
+    continueButton.setData(CssConstants.CSS_CLASS_NAME_KEY, "btn-primary");
 
     Button cancelButton = new Button(actionArea, SWT.PUSH);
     cancelButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
