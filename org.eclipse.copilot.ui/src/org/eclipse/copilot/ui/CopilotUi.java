@@ -138,13 +138,6 @@ public class CopilotUi extends AbstractUIPlugin {
       return;
     }
 
-    int storedVersion = preferenceStore.getInt(Constants.QUICK_START_VERSION);
-    if (storedVersion < Constants.CURRENT_QUICK_START_VERSION) {
-      SwtUtils.invokeOnDisplayThreadAsync(
-          () -> UiUtils.executeCommandWithParameters("org.eclipse.copilot.commands.openQuickStart", null));
-      preferenceStore.setValue(Constants.QUICK_START_VERSION, Constants.CURRENT_QUICK_START_VERSION);
-    }
-
     String lastUsedVersion = preferenceStore.getString(Constants.LAST_USED_PLUGIN_VERSION);
     Version bundleVersion = context.getBundle().getVersion();
     String currentVersion = bundleVersion.getMajor() + "." + bundleVersion.getMinor();
