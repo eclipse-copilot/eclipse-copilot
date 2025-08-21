@@ -454,6 +454,21 @@
 			</view>
 		</perspectiveExtension>
 		<perspectiveExtension
+			targetID="org.eclipse.jst.j2ee.J2EEPerspective">
+			<view
+				id="com.microsoft.copilot.eclipse.ui.chat.ChatView"
+				minimized="false"
+				relationship="stack"
+				relative="org.eclipse.ui.views.ContentOutline">
+			</view>
+			<view
+				id="org.eclipse.ui.views.ContentOutline"
+				minimized="false"
+				relationship="stack"
+				relative="com.microsoft.copilot.eclipse.ui.chat.ChatView">
+			</view>
+		</perspectiveExtension>
+		<perspectiveExtension
 			targetID="org.eclipse.jdt.ui.JavaBrowsingPerspective">
 			<view
 				id="com.microsoft.copilot.eclipse.ui.chat.ChatView"
