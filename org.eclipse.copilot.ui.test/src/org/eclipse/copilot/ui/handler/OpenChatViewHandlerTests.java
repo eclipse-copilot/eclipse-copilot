@@ -142,7 +142,7 @@ public class OpenChatViewHandlerTests {
       verify(mockChatView, times(1)).setFocus();
       verify(mockActionBar, times(1)).setInputTextViewerContent("Test message");
       verify(mockActionBar, never()).handleSendMessage();
-      verify(mockUserPreferenceService, times(1)).setActiveChatMode("Ask");
+      verify(mockUserPreferenceService, times(0)).setActiveChatMode("Ask");
     }
   }
 
@@ -172,7 +172,7 @@ public class OpenChatViewHandlerTests {
       verify(mockChatView, times(1)).setFocus();
       verify(mockActionBar, never()).setInputTextViewerContent(any());
       verify(mockActionBar, never()).handleSendMessage();
-      verify(mockUserPreferenceService, times(1)).setActiveChatMode("Ask");
+      verify(mockUserPreferenceService, times(0)).setActiveChatMode("Ask");
     }
   }
 
@@ -243,7 +243,7 @@ public class OpenChatViewHandlerTests {
       verify(mockChatView, times(1)).setFocus();
       verify(mockActionBar, never()).setInputTextViewerContent(any());
       verify(mockActionBar, never()).handleSendMessage();
-      verify(mockUserPreferenceService, times(1)).setActiveChatMode("Ask");
+      verify(mockUserPreferenceService, times(0)).setActiveChatMode("Ask");
     }
   }
 
