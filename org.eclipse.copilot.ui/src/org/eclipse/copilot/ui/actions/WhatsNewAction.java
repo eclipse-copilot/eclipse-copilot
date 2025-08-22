@@ -26,6 +26,7 @@ import org.eclipse.ui.intro.IIntroSite;
 import org.eclipse.ui.intro.config.IIntroAction;
 
 import org.eclipse.copilot.core.CopilotCore;
+import org.eclipse.copilot.ui.UiConstants;
 
 /**
  * Action to show the "What's New" information in the Eclipse IDE. This action is typically triggered from the What's
@@ -33,7 +34,7 @@ import org.eclipse.copilot.core.CopilotCore;
  */
 public class WhatsNewAction implements IIntroAction {
 
-  private static final String COMMAND = "org.eclipse.copilot.commands.showWhatIsNew"; //$NON-NLS-1$
+  private static final String COMMAND = UiConstants.OPEN_WHATS_NEW_COMMAND_ID;
 
   @Override
   public void run(IIntroSite site, Properties params) {

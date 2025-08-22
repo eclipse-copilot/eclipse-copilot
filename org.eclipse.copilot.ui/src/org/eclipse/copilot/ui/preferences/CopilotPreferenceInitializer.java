@@ -54,5 +54,6 @@ public class CopilotPreferenceInitializer extends AbstractPreferenceInitializer 
          """);
     pref.setDefault(Constants.MCP_TOOLS_STATUS, "{}");
     pref.setDefault(Constants.COPILOT_QUICK_START_VERSION, 0);
+    pref.setDefault(Constants.ALWAYS_SHOW_WHAT_IS_NEW, true);
   }
 }
