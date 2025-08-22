@@ -136,6 +136,22 @@ public class CopilotPreferencesPage extends FieldEditorPreferencePage implements
     // add chat note using WrappableNoteLabel
     new WrappableNoteLabel(chatGroup, Messages.preferences_page_note_prefix,
         Messages.preferences_page_watched_files_note_content);
+    
+    // What's new group
+    Group whatsNewGroup = new Group(parent, SWT.NONE);
+    whatsNewGroup.setLayout(gl);
+    gdf.applyTo(whatsNewGroup);
+    whatsNewGroup.setText(Messages.preferences_page_whats_new_settings);
+    
+    // always show "What is new" field
+    Composite whatsNewComposite = new Composite(whatsNewGroup, SWT.NONE);
+    whatsNewComposite.setLayout(gl);
+    whatsNewComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    BooleanFieldEditor showWhatsNewField = new BooleanFieldEditor(Constants.ALWAYS_SHOW_WHAT_IS_NEW,
+        Messages.preferences_page_always_show_whats_new, whatsNewComposite);
+    showWhatsNewField.getDescriptionControl(whatsNewComposite)
+        .setToolTipText(Messages.preferences_page_always_show_whats_new_tooltip);
+    addField(showWhatsNewField);
 
     // Add control listener to handle workspace context field resizing
     controlListener = new ControlAdapter() {

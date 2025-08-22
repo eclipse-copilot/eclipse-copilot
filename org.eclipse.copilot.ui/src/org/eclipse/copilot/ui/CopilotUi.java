@@ -133,18 +133,23 @@ public class CopilotUi extends AbstractUIPlugin {
   private void showHintIfNecessary(BundleContext context) {
     IPreferenceStore preferenceStore = CopilotUi.getPlugin().getPreferenceStore();
     if (!(preferenceStore instanceof IPersistentPreferenceStore)) {
-      // to make sure the updated preference store is saved, we will only show the quick start
+      // to make sure the updated preference store is saved, we will only show the what's new hint
       // if the preference store is IPersistentPreferenceStore.
       return;
     }
 
-    String lastUsedVersion = preferenceStore.getString(Constants.LAST_USED_PLUGIN_VERSION);
+    if (!preferenceStore.getBoolean(Constants.ALWAYS_SHOW_WHAT_IS_NEW)) {
+      // If the user has disabled the "always show what's new" preference, skip showing the hint.
+      return;
+    }
+
+    String lastUsedVersion = preferenceStore.getString(Constants.LAST_USED_COPILOT_PLUGIN_VERSION);
     Version bundleVersion = context.getBundle().getVersion();
     String currentVersion = bundleVersion.getMajor() + "." + bundleVersion.getMinor();
     if (!Objects.equals(lastUsedVersion, currentVersion)) {
       SwtUtils.invokeOnDisplayThreadAsync(
-          () -> UiUtils.executeCommandWithParameters("org.eclipse.copilot.commands.showWhatIsNew", null));
-      preferenceStore.setValue(Constants.LAST_USED_PLUGIN_VERSION, currentVersion);
+          () -> UiUtils.executeCommandWithParameters(UiConstants.OPEN_WHATS_NEW_COMMAND_ID, null));
+      preferenceStore.setValue(Constants.LAST_USED_COPILOT_PLUGIN_VERSION, currentVersion);
     }
 
     IPersistentPreferenceStore ps = (IPersistentPreferenceStore) preferenceStore;
