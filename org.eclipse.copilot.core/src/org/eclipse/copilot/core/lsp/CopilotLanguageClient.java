@@ -15,12 +15,16 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.lsp4e.LSPEclipseUtils;
 import org.eclipse.lsp4e.LanguageClientImpl;
 import org.eclipse.lsp4j.ProgressParams;
 import org.eclipse.lsp4j.ShowDocumentParams;
@@ -164,14 +168,16 @@ public class CopilotLanguageClient extends LanguageClientImpl {
 
   @Override
   public CompletableFuture<List<WorkspaceFolder>> workspaceFolders() {
-    // Ideally, we should return each IProject as a workspace folder, but given that when
-    // creating a new conversation or new conversation turn, the uri of the workspace folder
-    // is required to use the @project (or @workspace) agent. There is no easy way to guess which
-    // IProject should be used. So we are returning the workspace root as a single workspace folder.
-    final WorkspaceFolder folder = new WorkspaceFolder();
-    folder.setUri(PlatformUtils.getWorkspaceRootUri());
-    folder.setName("workspace-root"); // $NON-NLS-1$
-    return CompletableFuture.completedFuture(List.of(folder));
+    IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+    List<WorkspaceFolder> folders = List.of(projects).stream().filter(IProject::isAccessible).map(project -> {
+      WorkspaceFolder folder = new WorkspaceFolder();
+      folder.setUri(LSPEclipseUtils.toUri((IResource) project).toASCIIString());
+      folder.setName(project.getName());
+      CopilotCore.LOGGER.info("Adding project folder: " + folder.toString());
+      return folder;
+    }).toList();
+
+    return CompletableFuture.completedFuture(folders);
   }
 
   /**
