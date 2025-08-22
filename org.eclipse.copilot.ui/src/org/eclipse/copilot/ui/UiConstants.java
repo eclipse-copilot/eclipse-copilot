@@ -16,7 +16,6 @@ public class UiConstants {
 
   public static final String WORKBENCH_TEXTEDITOR = "org.eclipse.ui.workbench.texteditor";
   public static final String INSERT_ICON = "icons/full/elcl16/insert_template.png";
-  public static final String USE_PARENT_BACKGROUND = "useParentBackground";
   public static final String OPEN_CHAT_VIEW_INPUT_VALUE = "org.eclipse.copilot.commands.openChatView.inputValue";
   public static final String OPEN_CHAT_VIEW_AUTO_SEND = "org.eclipse.copilot.commands.openChatView.autoSend";
 

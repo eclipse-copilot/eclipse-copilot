@@ -24,6 +24,8 @@ import org.eclipse.copilot.ui.CopilotUi;
 import org.eclipse.copilot.ui.UiConstants;
 import org.eclipse.copilot.ui.chat.ActionBar;
 import org.eclipse.copilot.ui.chat.ChatView;
+import org.eclipse.copilot.ui.chat.services.ChatServiceManager;
+import org.eclipse.copilot.ui.chat.services.UserPreferenceService;
 
 /**
  * Handler for opening the chat view.
@@ -69,7 +71,18 @@ public class OpenChatViewHandler extends CopilotHandler {
    * @param chatView the chat view to set parameters on
    */
   private void setUpParameters(ExecutionEvent event, ChatView chatView) {
-    CopilotUi.getPlugin().getChatServiceManager().getUserPreferenceService().setActiveChatMode(ChatMode.Ask.toString());
+    // Add null checks for chatServiceManager and userPreferenceService before setting chat mode
+    ChatServiceManager chatServiceManager = CopilotUi.getPlugin().getChatServiceManager();
+    if (chatServiceManager != null) {
+      UserPreferenceService userPreferenceService = chatServiceManager.getUserPreferenceService();
+      if (userPreferenceService != null) {
+        userPreferenceService.setActiveChatMode(ChatMode.Ask.toString());
+      } else {
+        CopilotCore.LOGGER.error(new IllegalStateException("UserPreferenceService is null when opening chat view"));
+      }
+    } else {
+      CopilotCore.LOGGER.error(new IllegalStateException("ChatServiceManager is null when opening chat view"));
+    }
 
     String inputValue = event.getParameter(UiConstants.OPEN_CHAT_VIEW_INPUT_VALUE);
     ActionBar actionBar = chatView.getActionBar();
