@@ -168,15 +168,7 @@ public class CopilotLanguageClient extends LanguageClientImpl {
 
   @Override
   public CompletableFuture<List<WorkspaceFolder>> workspaceFolders() {
-    // Ideally, we should return each IProject as a workspace folder, but given that when
-    // creating a new conversation or new conversation turn, the uri of the workspace folder
-    // is required to use the @project (or @workspace) agent. There is no easy way to guess which
-    // IProject should be used. So we are returning the workspace root as a single workspace folder.
-    // final WorkspaceFolder folder = new WorkspaceFolder();
-    // folder.setUri(PlatformUtils.getWorkspaceRootUri());
-    // folder.setName("workspace-root"); // $NON-NLS-1$
-
-    IProject[] projects = ResourcesPlugin.getPlugin().getWorkspace().getRoot().getProjects();
+    IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
     List<WorkspaceFolder> folders = List.of(projects).stream().filter(IProject::isAccessible).map(project -> {
       WorkspaceFolder folder = new WorkspaceFolder();
       folder.setUri(LSPEclipseUtils.toUri((IResource) project).toASCIIString());
@@ -184,14 +176,6 @@ public class CopilotLanguageClient extends LanguageClientImpl {
       CopilotCore.LOGGER.info("Adding project folder: " + folder.toString());
       return folder;
     }).toList();
-
-    final WorkspaceFolder folder0 = new WorkspaceFolder();
-    folder0.setUri("file:///C:/Users/petertao/runtime-New_configuration/mytest/");
-    folder0.setName("mytest");
-
-    final WorkspaceFolder folder1 = new WorkspaceFolder();
-    folder1.setUri("file:///C:/Users/petertao/runtime-New_configuration/testpeter/");
-    folder1.setName("testpeter");
 
     return CompletableFuture.completedFuture(folders);
   }
@@ -204,8 +188,7 @@ public class CopilotLanguageClient extends LanguageClientImpl {
     if (watchedFileManager == null) {
       watchedFileManager = new WatchedFileManager();
     }
-    return CompletableFuture.completedFuture(
-        new GetWatchedFilesResponse(watchedFileManager.getWatchedFiles((GetWatchedFilesRequest) params)));
+    return CompletableFuture.completedFuture(new GetWatchedFilesResponse(watchedFileManager.getWatchedFiles(params)));
   }
 
   /**

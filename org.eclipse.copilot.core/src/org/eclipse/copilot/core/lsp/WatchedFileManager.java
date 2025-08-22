@@ -83,27 +83,18 @@ class WatchedFileManager {
    */
   public synchronized List<String> getWatchedFiles(GetWatchedFilesRequest params) {
     CopilotCore.LOGGER.info("Get watched files for project: " + params.getWorkspaceUri());
-
-//    if (files != null) {
-//      return new ArrayList<>(files);
-//    }
     files = new LinkedHashSet<>();
-
     String projectUri = params.getWorkspaceUri();
-    // TODO: generate the project from the projectUri
-
-    IProject[] projects = ResourcesPlugin.getPlugin().getWorkspace().getRoot().getProjects();
+    IProject watchedProject = getWatchedProject(projectUri);
+    if (watchedProject == null) {
+      CopilotCore.LOGGER.info("No accessible project found for the given workspace URI: " + params.getWorkspaceUri());
+      return Collections.emptyList();
+    }
 
     // Load ignore nodes
     if (params.isExcludeGitignoredFiles()) {
       List<IFile> gitignoreFiles = new ArrayList<>();
-      for (IProject project : projects) {
-        if (!project.isAccessible() || !LSPEclipseUtils.toUri((IResource) project).toASCIIString().equals(projectUri)) {
-          continue;
-        }
-        gitignoreFiles.addAll(findGitignoreFiles(project));
-      }
-
+      gitignoreFiles.addAll(findGitignoreFiles(watchedProject));
       // Sort gitignore files by their path to ensure the closest .gitignore is used first.
       gitignoreFiles.sort((f1, f2) -> {
         return f2.getLocation().segmentCount() - f1.getLocation().segmentCount();
@@ -113,20 +104,26 @@ class WatchedFileManager {
     }
 
     // collect watched files
+    try {
+      collectFiles(watchedProject);
+    } catch (CoreException e) {
+      CopilotCore.LOGGER.error("Error when collect files", e);
+      return Collections.emptyList();
+    }
+
+    return new ArrayList<>(files);
+  }
+
+  private IProject getWatchedProject(String projectUri) {
+    IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
     for (IProject project : projects) {
       if (!project.isAccessible() || !LSPEclipseUtils.toUri((IResource) project).toASCIIString().equals(projectUri)) {
         continue;
       }
 
-      try {
-        collectFiles(project);
-      } catch (CoreException e) {
-        CopilotCore.LOGGER.error("Error when collect files", e);
-        return Collections.emptyList();
-      }
+      return project;
     }
-
-    return new ArrayList<>(files);
+    return null;
   }
 
   private List<IFile> findGitignoreFiles(IProject project) {
