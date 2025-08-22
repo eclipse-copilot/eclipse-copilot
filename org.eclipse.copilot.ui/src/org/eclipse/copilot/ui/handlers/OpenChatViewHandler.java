@@ -71,28 +71,37 @@ public class OpenChatViewHandler extends CopilotHandler {
    * @param chatView the chat view to set parameters on
    */
   private void setUpParameters(ExecutionEvent event, ChatView chatView) {
-    // Add null checks for chatServiceManager and userPreferenceService before setting chat mode
     ChatServiceManager chatServiceManager = CopilotUi.getPlugin().getChatServiceManager();
-    if (chatServiceManager != null) {
-      UserPreferenceService userPreferenceService = chatServiceManager.getUserPreferenceService();
-      if (userPreferenceService != null) {
-        userPreferenceService.setActiveChatMode(ChatMode.Ask.toString());
-      } else {
-        CopilotCore.LOGGER.error(new IllegalStateException("UserPreferenceService is null when opening chat view"));
-      }
-    } else {
-      CopilotCore.LOGGER.error(new IllegalStateException("ChatServiceManager is null when opening chat view"));
+    if (chatServiceManager == null) {
+      return;
     }
 
-    String inputValue = event.getParameter(UiConstants.OPEN_CHAT_VIEW_INPUT_VALUE);
-    ActionBar actionBar = chatView.getActionBar();
-    if (StringUtils.isNotBlank(inputValue) && actionBar != null) {
-      actionBar.setInputTextViewerContent(inputValue);
+    UserPreferenceService userPreferenceService = chatServiceManager.getUserPreferenceService();
+    if (userPreferenceService == null) {
+      return;
+    }
 
-      String autoSend = event.getParameter(UiConstants.OPEN_CHAT_VIEW_AUTO_SEND);
-      if (StringUtils.isNotBlank(autoSend) && Boolean.parseBoolean(autoSend)) {
-        actionBar.handleSendMessage();
-      }
+    // Force chat mode to Ask if auto-send is enabled
+    if (event.getParameter(UiConstants.OPEN_CHAT_VIEW_INPUT_VALUE) != null
+        && event.getParameter(UiConstants.OPEN_CHAT_VIEW_AUTO_SEND) != null
+        && Boolean.parseBoolean(event.getParameter(UiConstants.OPEN_CHAT_VIEW_AUTO_SEND))) {
+      userPreferenceService.setActiveChatMode(ChatMode.Ask.toString());
+    }
+
+    ActionBar actionBar = chatView.getActionBar();
+    if (actionBar == null) {
+      return;
+    }
+
+    String inputValue = StringUtils.trimToNull(event.getParameter(UiConstants.OPEN_CHAT_VIEW_INPUT_VALUE));
+    if (inputValue == null) {
+      return;
+    }
+
+    actionBar.setInputTextViewerContent(inputValue);
+
+    if (Boolean.parseBoolean(event.getParameter(UiConstants.OPEN_CHAT_VIEW_AUTO_SEND))) {
+      actionBar.handleSendMessage();
     }
   }
 }
