@@ -396,10 +396,22 @@ public class UiUtils {
    */
   public static Button createIconButton(Composite parent, int style) {
     Button result = new Button(parent, style);
+
+    // Color for accessibility focus indicator
+    final Color focusIndicatorColor = new Color(result.getDisplay(), 0, 120, 212);
+    final boolean[] mouseEntered = new boolean[1];
+
     result.addPaintListener(e -> {
       // Prevent the default border from being drawn
       Rectangle bounds = result.getBounds();
       e.gc.fillRectangle(0, 0, bounds.width, bounds.height);
+
+      // Draw focus indicator border for accessibility
+      if (result.isFocusControl() && !mouseEntered[0]) {
+        e.gc.setForeground(focusIndicatorColor);
+        e.gc.setLineWidth(1);
+        e.gc.drawRectangle(0, 0, bounds.width - 1, bounds.height - 1);
+      }
 
       // Draw the button's image if it has one
       Image image = result.getImage();
@@ -425,11 +437,35 @@ public class UiUtils {
       public void focusGained(org.eclipse.swt.events.FocusEvent e) {
         background = result.getBackground();
         result.setBackground(focusBackground);
+        result.redraw(); // Ensure the focus border is drawn
+        CopilotCore.LOGGER.info("Button focus gained: " + result.getToolTipText());
       }
 
       @Override
       public void focusLost(org.eclipse.swt.events.FocusEvent e) {
         result.setBackground(background);
+        result.redraw(); // Ensure the focus border is removed
+        CopilotCore.LOGGER.info("Button focus lost: " + result.getToolTipText());
+      }
+    });
+    
+    result.addTraverseListener(e -> {
+      CopilotCore.LOGGER.info("Button traverse: " + result.getToolTipText() + ", detail=" + e.detail);
+      if (e.detail == SWT.TRAVERSE_TAB_PREVIOUS) {
+        CopilotCore.LOGGER.info("Button traverse previous: " + result.getToolTipText());
+        e.doit = true;
+      }
+    });
+    
+    result.addMouseListener(new org.eclipse.swt.events.MouseAdapter() {
+      @Override
+      public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
+        CopilotCore.LOGGER.info("Button mouse down: " + result.getToolTipText());
+      }
+      
+      @Override
+      public void mouseUp(org.eclipse.swt.events.MouseEvent e) {
+        CopilotCore.LOGGER.info("Button mouse up: " + result.getToolTipText());
       }
     });
 
@@ -444,11 +480,15 @@ public class UiUtils {
         // the color when the mouse enters.
         background = result.getBackground();
         result.setBackground(hoverBackground);
+        mouseEntered[0] = true;
+        CopilotCore.LOGGER.info("Button mouse enter: " + result.getToolTipText());
       }
 
       @Override
       public void mouseExit(org.eclipse.swt.events.MouseEvent e) {
         result.setBackground(background);
+        mouseEntered[0] = false;
+        CopilotCore.LOGGER.info("Button mouse exit: " + result.getToolTipText());
       }
     });
     return result;
