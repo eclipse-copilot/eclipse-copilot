@@ -119,6 +119,16 @@
 			categoryId="org.eclipse.copilot.ui.githubCopilot"
 			id="org.eclipse.copilot.commands.openChatView"
 			name="%command.showChatView.name">
+			<commandParameter 
+				id="org.eclipse.copilot.commands.openChatView.inputValue"
+				name="%command.openChatView.inputValue"
+				values="">
+			</commandParameter>
+			<commandParameter 
+				id="org.eclipse.copilot.commands.openChatView.autoSend"
+				name="%command.openChatView.autoSend"
+				values="">
+			</commandParameter>
 		</command>
 		<command
 			id="org.eclipse.copilot.commands.signOut"

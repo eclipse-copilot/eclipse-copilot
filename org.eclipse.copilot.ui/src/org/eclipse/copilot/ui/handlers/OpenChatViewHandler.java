@@ -9,6 +9,7 @@
 
 package org.eclipse.copilot.ui.handlers;
 
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.IWorkbenchPage;
@@ -18,7 +19,13 @@ import org.eclipse.ui.PlatformUI;
 
 import org.eclipse.copilot.core.Constants;
 import org.eclipse.copilot.core.CopilotCore;
+import org.eclipse.copilot.core.lsp.protocol.ChatMode;
+import org.eclipse.copilot.ui.CopilotUi;
+import org.eclipse.copilot.ui.UiConstants;
+import org.eclipse.copilot.ui.chat.ActionBar;
 import org.eclipse.copilot.ui.chat.ChatView;
+import org.eclipse.copilot.ui.chat.services.ChatServiceManager;
+import org.eclipse.copilot.ui.chat.services.UserPreferenceService;
 
 /**
  * Handler for opening the chat view.
@@ -26,14 +33,17 @@ import org.eclipse.copilot.ui.chat.ChatView;
 public class OpenChatViewHandler extends CopilotHandler {
   @Override
   public Object execute(ExecutionEvent event) throws ExecutionException {
-    openMyView();
+    ChatView chatView = openChatView();
+    if (chatView != null) {
+      setUpParameters(event, chatView);
+    }
     return null;
   }
 
   /**
    * Opens the chat view.
    */
-  public void openMyView() {
+  private ChatView openChatView() {
     IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
     if (window != null) {
       IWorkbenchPage page = window.getActivePage();
@@ -42,11 +52,56 @@ public class OpenChatViewHandler extends CopilotHandler {
           ChatView view = (ChatView) page.showView(Constants.CHAT_VIEW_ID);
           if (view != null) {
             view.setFocus();
+            return view;
           }
         } catch (PartInitException e) {
           CopilotCore.LOGGER.error("Failed to open chat view", e);
         }
+        return null;
       }
+    }
+
+    return null;
+  }
+
+  /**
+   * Sets up parameters for the chat view based on the execution event and forces the chat mode to "Ask".
+   *
+   * @param event the execution event containing parameters
+   * @param chatView the chat view to set parameters on
+   */
+  private void setUpParameters(ExecutionEvent event, ChatView chatView) {
+    ChatServiceManager chatServiceManager = CopilotUi.getPlugin().getChatServiceManager();
+    if (chatServiceManager == null) {
+      return;
+    }
+
+    UserPreferenceService userPreferenceService = chatServiceManager.getUserPreferenceService();
+    if (userPreferenceService == null) {
+      return;
+    }
+
+    // Force chat mode to Ask if auto-send is enabled
+    if (event.getParameter(UiConstants.OPEN_CHAT_VIEW_INPUT_VALUE) != null
+        && event.getParameter(UiConstants.OPEN_CHAT_VIEW_AUTO_SEND) != null
+        && Boolean.parseBoolean(event.getParameter(UiConstants.OPEN_CHAT_VIEW_AUTO_SEND))) {
+      userPreferenceService.setActiveChatMode(ChatMode.Ask.toString());
+    }
+
+    ActionBar actionBar = chatView.getActionBar();
+    if (actionBar == null) {
+      return;
+    }
+
+    String inputValue = StringUtils.trimToNull(event.getParameter(UiConstants.OPEN_CHAT_VIEW_INPUT_VALUE));
+    if (inputValue == null) {
+      return;
+    }
+
+    actionBar.setInputTextViewerContent(inputValue);
+
+    if (Boolean.parseBoolean(event.getParameter(UiConstants.OPEN_CHAT_VIEW_AUTO_SEND))) {
+      actionBar.handleSendMessage();
     }
   }
 }

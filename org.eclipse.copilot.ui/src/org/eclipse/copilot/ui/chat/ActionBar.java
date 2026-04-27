@@ -386,35 +386,37 @@ public class ActionBar extends Composite implements NewConversationListener {
       });
     }
 
-    // Add toggle button for all modes
-    this.sendImage = UiUtils.buildImageFromPngPath("/icons/chat/send.png");
-    this.cancelImage = UiUtils.buildImageFromPngPath("/icons/chat/cancel.png");
-    this.btnMsgToggle = UiUtils.createIconButton(bottomRightButtonsComposite, SWT.PUSH | SWT.FLAT);
-    this.btnMsgToggle.setEnabled(StringUtils.isBlank(this.inputTextViewer.getContent()) ? false : true);
-    this.btnMsgToggle.setImage(this.sendImage);
-    this.btnMsgToggle.setToolTipText(Messages.chat_actionBar_sendButton_Tooltip);
-    GridData sendGd = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
-    sendGd.widthHint = this.sendImage.getImageData().width + 2 * UiConstants.BTN_PADDING;
-    sendGd.heightHint = this.sendImage.getImageData().height + 2 * UiConstants.BTN_PADDING;
-    this.btnMsgToggle.setLayoutData(sendGd);
-    this.btnMsgToggle.addSelectionListener(new SelectionAdapter() {
-      @Override
-      public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-        if (isSendButton) {
-          handleSendMessage();
-        } else {
-          handleCancelMessage();
+    // Add toggle button for all modes if it has not been created
+    if (btnMsgToggle == null || btnMsgToggle.isDisposed()) {
+      this.sendImage = UiUtils.buildImageFromPngPath("/icons/chat/send.png");
+      this.cancelImage = UiUtils.buildImageFromPngPath("/icons/chat/cancel.png");
+      this.btnMsgToggle = UiUtils.createIconButton(bottomRightButtonsComposite, SWT.PUSH | SWT.FLAT);
+      this.btnMsgToggle.setEnabled(StringUtils.isBlank(this.inputTextViewer.getContent()) ? false : true);
+      this.btnMsgToggle.setImage(this.sendImage);
+      this.btnMsgToggle.setToolTipText(Messages.chat_actionBar_sendButton_Tooltip);
+      GridData sendGd = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
+      sendGd.widthHint = this.sendImage.getImageData().width + 2 * UiConstants.BTN_PADDING;
+      sendGd.heightHint = this.sendImage.getImageData().height + 2 * UiConstants.BTN_PADDING;
+      this.btnMsgToggle.setLayoutData(sendGd);
+      this.btnMsgToggle.addSelectionListener(new SelectionAdapter() {
+        @Override
+        public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+          if (isSendButton) {
+            handleSendMessage();
+          } else {
+            handleCancelMessage();
+          }
         }
-      }
-    });
-    this.btnMsgToggle.addDisposeListener(e -> {
-      if (sendImage != null && !sendImage.isDisposed()) {
-        sendImage.dispose();
-      }
-      if (cancelImage != null && !cancelImage.isDisposed()) {
-        cancelImage.dispose();
-      }
-    });
+      });
+      this.btnMsgToggle.addDisposeListener(e -> {
+        if (sendImage != null && !sendImage.isDisposed()) {
+          sendImage.dispose();
+        }
+        if (cancelImage != null && !cancelImage.isDisposed()) {
+          cancelImage.dispose();
+        }
+      });
+    }
 
     // Refresh the layout
     this.bottomRightButtonsComposite.requestLayout();
@@ -480,7 +482,21 @@ public class ActionBar extends Composite implements NewConversationListener {
     return false;
   }
 
-  private void handleSendMessage() {
+  /**
+   * Set the content of the input text viewer.
+   *
+   * @param content the content to set
+   */
+  public void setInputTextViewerContent(String content) {
+    if (inputTextViewer != null && content != null) {
+      inputTextViewer.setContent(content);
+    }
+  }
+
+  /**
+   * Handles the send message event.
+   */
+  public void handleSendMessage() {
     updateButtonState(SendOrCancelButtonStates.CANCEL_ENABLED);
     String message = this.inputTextViewer.getContent();
     String workDoneToken = UUID.randomUUID().toString();
