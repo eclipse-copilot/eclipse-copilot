@@ -37,9 +37,11 @@ public class Constants {
   public static final String CUSTOM_INSTRUCTIONS_WORKSPACE_ENABLED = "customInstructionsWorkspaceEnabled";
   public static final String GITHUB_COPILOT_URL = "http://github.com";
   public static final String COPILOT_QUICK_START_VERSION = "copilotQuickStartVersion";
-  public static final String LAST_USED_PLUGIN_VERSION = "lastUsedPluginVersion";
+  public static final String LAST_USED_COPILOT_PLUGIN_VERSION = "lastUsedCopilotPluginVersion";
   public static final String CHAT_VIEW_ID = "com.microsoft.copilot.eclipse.ui.chat.ChatView";
   public static final String CHAT_CHANNEL = "chatProgress";
+  public static final String ALWAYS_SHOW_WHAT_IS_NEW = "alwaysShowWhatsNew";
+  
   // Base excluded file types shared by both
   // Copied from InelliJ, excluded file extension list
   // https://github.com/microsoft/copilot-intellij/blob/main/core/src/main/kotlin/com/github/copilot/chat/references/FileSearchService.kt

@@ -424,6 +424,12 @@ public class ShowStatusBarMenuHandler extends CopilotHandler implements IElement
         @Override
         public void run() {
           try {
+            if (commandId != null && "org.eclipse.copilot.commands.openChatView".equals(commandId)) {
+              Map<String, Object> commandParameters = Map.of(
+                  UiConstants.OPEN_CHAT_VIEW_INPUT_VALUE, "Hi", UiConstants.OPEN_CHAT_VIEW_AUTO_SEND, "false");
+              UiUtils.executeCommandWithParameters(commandId, commandParameters);
+              return;
+            }
             if (parameters != null && !parameters.isEmpty()) {
               ICommandService commandService = PlatformUI.getWorkbench().getService(ICommandService.class);
               Command command = commandService.getCommand(commandId);
