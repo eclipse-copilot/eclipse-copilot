@@ -35,8 +35,8 @@ import org.eclipse.copilot.ui.chat.tools.BaseTool;
 import org.eclipse.copilot.ui.chat.tools.CreateFileTool;
 import org.eclipse.copilot.ui.chat.tools.EditFileTool;
 import org.eclipse.copilot.ui.chat.tools.GetErrorsTool;
-import org.eclipse.copilot.ui.chat.tools.RunInTerminalTool;
-import org.eclipse.copilot.ui.chat.tools.RunInTerminalTool.GetTerminalOutputTool;
+import org.eclipse.copilot.ui.chat.tools.RunInTerminalToolAdapter;
+import org.eclipse.copilot.ui.chat.tools.RunInTerminalToolAdapter.GetTerminalOutputTool;
 import org.eclipse.copilot.ui.utils.SwtUtils;
 
 /**
@@ -54,6 +54,7 @@ public class AgentToolService implements ToolInvocationListener {
   public AgentToolService(CopilotLanguageServerConnection lsConnection) {
     this.tools = new ConcurrentHashMap<>();
     this.lsConnection = lsConnection;
+    registerTerminalTools();
     registerDefaultTools();
   }
 
@@ -64,10 +65,6 @@ public class AgentToolService implements ToolInvocationListener {
     // File operations
     registerTool(new CreateFileTool());
     registerTool(new EditFileTool());
-
-    // Terminal operations
-    registerTool(new RunInTerminalTool());
-    registerTool(new GetTerminalOutputTool());
 
     // Diagnostic tools
     registerTool(new GetErrorsTool());
@@ -102,6 +99,12 @@ public class AgentToolService implements ToolInvocationListener {
       CopilotCore.LOGGER.error("Error registering tools with the server", e);
       return null;
     });
+  }
+
+  
+  private void registerTerminalTools() {
+    registerTool(new RunInTerminalToolAdapter());
+    registerTool(new GetTerminalOutputTool());
   }
 
   /**

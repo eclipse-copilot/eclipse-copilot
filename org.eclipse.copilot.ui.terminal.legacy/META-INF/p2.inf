@@ -1,0 +1,5 @@
+requires.0.namespace=org.eclipse.equinox.p2.iu
+requires.0.name=org.eclipse.platform
+requires.0.range=[0.0.0,4.37.0)
+requires.0.optional=true
+requires.0.filter=(!(org.eclipse.copilot=true))

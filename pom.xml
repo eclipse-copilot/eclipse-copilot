@@ -19,6 +19,9 @@
 	<modules>
 		<module>org.eclipse.copilot.core</module>
 		<module>org.eclipse.copilot.ui</module>
+		<module>org.eclipse.copilot.api</module>
+		<module>org.eclipse.copilot.ui.terminal.legacy</module>
+		<module>org.eclipse.copilot.ui.terminal</module>
 
 		<!-- branding -->
 		<module>org.eclipse.copilot.branding</module>
@@ -73,8 +76,9 @@
 				<version>${tycho-version}</version>
 				<configuration>
 					<target>
-						<file>../target-platform.target</file>
+						<file>../base.target</file>
 					</target>
+					<executionEnvironment>JavaSE-21</executionEnvironment>
 					<environments>
 						<environment>
 							<os>macosx</os>

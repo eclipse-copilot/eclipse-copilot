@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Github Copilot - Legacy Terminal
+Bundle-SymbolicName: org.eclipse.copilot.ui.terminal.legacy
+Bundle-Version: 0.10.1.qualifier
+Fragment-Host: org.eclipse.copilot.api;bundle-version="0.10.1"
+Automatic-Module-Name: org.eclipse.copilot.ui.legacy
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Require-Bundle: org.eclipse.tm.terminal.view.core,
+ org.eclipse.tm.terminal.view.ui,
+ org.eclipse.tm.terminal.control,
+ org.eclipse.tm.terminal.connector.local,
+ org.eclipse.tm.terminal.connector.process
